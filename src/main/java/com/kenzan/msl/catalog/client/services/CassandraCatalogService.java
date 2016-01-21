@@ -31,7 +31,7 @@ public class CassandraCatalogService
 
     private static CassandraCatalogService instance = null;
 
-    private CassandraCatalogService () {
+    private CassandraCatalogService() {
         // TODO: Get the contact point from config param
         Cluster cluster = Cluster.builder().addContactPoint("127.0.0.1").build();
 
@@ -43,7 +43,7 @@ public class CassandraCatalogService
     }
 
     public static CassandraCatalogService getInstance() {
-        if (instance == null) {
+        if ( instance == null ) {
             instance = new CassandraCatalogService();
         }
         return instance;

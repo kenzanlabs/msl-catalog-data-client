@@ -13,23 +13,18 @@ public class PaginationQuery {
 
     /**
      * Adds a paging state to the mappingManager object and paging_state table
-     * 
+     *
      * @param manager com.datastax.driver.mapping.MappingManager
      * @param pagingState com.kenzan.msl.catalog.client.dao.PagingStateDao
      */
     public static void add(final MappingManager manager, final PagingStateDao pagingState) {
-        try {
-            pagingState.getPagingState().setPageState(null);
-            manager.mapper(PagingStateDao.class).save(pagingState, Mapper.Option.ttl(PAGING_STATE_TTL_SECS));
-        }
-        catch ( Exception err ) {
-            throw err;
-        }
+        pagingState.getPagingState().setPageState(null);
+        manager.mapper(PagingStateDao.class).save(pagingState, Mapper.Option.ttl(PAGING_STATE_TTL_SECS));
     }
 
     /**
      * Retrieves the paging state from the MappingManager object and paging_state table
-     * 
+     *
      * @param manager com.datastax.driver.mapping.MappingManager
      * @param pagingId java.util.UUID
      * @return Optional<PagingStateDao>
@@ -47,17 +42,12 @@ public class PaginationQuery {
 
     /**
      * Removes the paging state from the MappingManager object and paging_state table
-     * 
+     *
      * @param manager com.datastax.driver.mapping.MappingManager
      * @param pagingId java.util.UUID
      */
     public static void remove(final MappingManager manager, UUID pagingId) {
-        try {
-            manager.mapper(PagingStateDao.class).delete(pagingId);
-        }
-        catch ( Exception err ) {
-            throw err;
-        }
+        manager.mapper(PagingStateDao.class).delete(pagingId);
     }
 
 }
