@@ -35,9 +35,8 @@ public class PaginationQuery {
         if ( null == pagingStateDao ) {
             return Optional.absent();
         }
-        else {
-            return Optional.of(pagingStateDao);
-        }
+        
+		return Optional.of(pagingStateDao);
     }
 
     /**

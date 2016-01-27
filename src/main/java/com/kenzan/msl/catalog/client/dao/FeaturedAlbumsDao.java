@@ -43,14 +43,16 @@ public class FeaturedAlbumsDao extends AbstractAlbumDao {
     /**
      * @return the imageLink
      */
-    public String getImageLink() {
+    @Override
+	public String getImageLink() {
         return imageLink;
     }
 
     /**
      * @param imageLink the imageLink to set
      */
-    public void setImageLink(String imageLink) {
+    @Override
+	public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
 
