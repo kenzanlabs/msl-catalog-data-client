@@ -47,8 +47,7 @@ public class AlbumsQuery {
         if ( limit.isPresent() ) {
             return queryAccessor.albumArtistBySongWithLimit(songId, limit.get());
         }
-        else {
-            return queryAccessor.albumArtistBySong(songId);
-        }
+        
+		return queryAccessor.albumArtistBySong(songId);
     }
 }
