@@ -1,13 +1,11 @@
 package com.kenzan.msl.catalog.client.cassandra;
 
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.ResultSetFuture;
 import com.datastax.driver.core.Statement;
 import com.datastax.driver.mapping.annotations.Accessor;
 import com.datastax.driver.mapping.annotations.Param;
 import com.datastax.driver.mapping.annotations.Query;
 
-import java.util.Date;
 import java.util.UUID;
 
 @Accessor
