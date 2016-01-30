@@ -41,6 +41,22 @@ public class SongsAlbumsByArtistDao {
     private Map<UUID, String> similarArtists;
     @Column(name = "song_duration")
     private int songDuration;
+    @Column(name = "image_link")
+    private String imageLink;
+
+    /**
+     * @return the image url
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * @param imageLink url of the image
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 
     /**
      * @return the artistId

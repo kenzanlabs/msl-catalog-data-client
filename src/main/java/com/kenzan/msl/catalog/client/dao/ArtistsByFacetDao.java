@@ -29,6 +29,22 @@ public class ArtistsByFacetDao extends AbstractArtistDao {
     private String artistName;
     @Column(name = "artist_mbid")
     private UUID artistMbid;
+    @Column(name = "image_link")
+    private String imageLink;
+
+    /**
+     * @return the image url
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * @param imageLink url of the image
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 
     /**
      * @return the facetName

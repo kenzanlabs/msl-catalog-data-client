@@ -68,7 +68,6 @@ public class CassandraCatalogServiceTest {
         manager = PowerMockito.mock(MappingManager.class);
         PowerMockito.whenNew(MappingManager.class).withAnyArguments().thenReturn(manager);
 
-
         Mapper<FeaturedAlbumsDao> myFeaturedAlbumsMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(FeaturedAlbumsDao.class)).thenReturn(myFeaturedAlbumsMapper);
         PowerMockito.when(myFeaturedAlbumsMapper.map(resultSet)).thenReturn(null);
@@ -76,31 +75,31 @@ public class CassandraCatalogServiceTest {
         Mapper<AlbumsByFacetDao> myAlbumsByFacetMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(AlbumsByFacetDao.class)).thenReturn(myAlbumsByFacetMapper);
         PowerMockito.when(myAlbumsByFacetMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<AlbumArtistBySongDao> myAlbumArtistBySongMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(AlbumArtistBySongDao.class)).thenReturn(myAlbumArtistBySongMapper);
         PowerMockito.when(myAlbumArtistBySongMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<FeaturedArtistsDao> myFeaturedArtistsMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(FeaturedArtistsDao.class)).thenReturn(myFeaturedArtistsMapper);
         PowerMockito.when(myFeaturedArtistsMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<FeaturedSongsDao> myFeaturedSongsMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(FeaturedSongsDao.class)).thenReturn(myFeaturedSongsMapper);
         PowerMockito.when(myFeaturedSongsMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<SongsByFacetDao> mySongsByFacetMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(SongsByFacetDao.class)).thenReturn(mySongsByFacetMapper);
         PowerMockito.when(mySongsByFacetMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<ArtistsByFacetDao> myArtistsByFacetMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(ArtistsByFacetDao.class)).thenReturn(myArtistsByFacetMapper);
         PowerMockito.when(myArtistsByFacetMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<SongsAlbumsByArtistDao> mySongsAlbumsByArtistMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(SongsAlbumsByArtistDao.class)).thenReturn(mySongsAlbumsByArtistMapper);
         PowerMockito.when(mySongsAlbumsByArtistMapper.map(resultSet)).thenReturn(null);
-        
+
         Mapper<SongsArtistByAlbumDao> mySongsArtistByAlbumMapper = PowerMockito.mock(Mapper.class);
         PowerMockito.when(manager.mapper(SongsArtistByAlbumDao.class)).thenReturn(mySongsArtistByAlbumMapper);
         PowerMockito.when(mySongsArtistByAlbumMapper.map(resultSet)).thenReturn(null);
