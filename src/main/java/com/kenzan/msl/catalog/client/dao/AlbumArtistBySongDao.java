@@ -41,6 +41,22 @@ public class AlbumArtistBySongDao {
     private Integer songDuration;
     @Column(name = "song_name")
     private String songName;
+    @Column(name = "image_link")
+    private String imageLink;
+
+    /**
+     * @return the image url
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * @param imageLink url of the image
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
+    }
 
     /**
      * @return the songId

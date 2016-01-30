@@ -48,8 +48,8 @@ public class SongsQuery {
         if ( limit.isPresent() ) {
             return queryAccessor.songsAlbumsByArtistWithLimit(artistId, limit.get());
         }
-        
-		return queryAccessor.songsAlbumsByArtist(artistId);
+
+        return queryAccessor.songsAlbumsByArtist(artistId);
     }
 
     /**
@@ -65,8 +65,8 @@ public class SongsQuery {
         if ( limit.isPresent() ) {
             return queryAccessor.songsArtistByAlbumWithLimit(albumId, limit.get());
         }
-        
-		return queryAccessor.songsArtistByAlbum(albumId);
+
+        return queryAccessor.songsArtistByAlbum(albumId);
     }
 
 }
