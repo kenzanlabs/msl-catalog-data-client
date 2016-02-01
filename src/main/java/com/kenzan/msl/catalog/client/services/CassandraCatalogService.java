@@ -75,8 +75,8 @@ public class CassandraCatalogService
         if ( result.isPresent() ) {
             return Observable.just(result.get());
         }
-        
-		return Observable.empty();
+
+        return Observable.empty();
     }
 
     /**
