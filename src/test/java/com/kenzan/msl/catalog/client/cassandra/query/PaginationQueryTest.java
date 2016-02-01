@@ -4,7 +4,7 @@ import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.google.common.base.Optional;
 import com.kenzan.msl.catalog.client.TestConstants;
-import com.kenzan.msl.catalog.client.dao.PagingStateDao;
+import com.kenzan.msl.catalog.client.dto.PagingStateDto;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,13 +26,13 @@ public class PaginationQueryTest {
     TestConstants tc = TestConstants.getInstance();
 
     private MappingManager manager;
-    private Mapper<PagingStateDao> mapper;
+    private Mapper<PagingStateDto> mapper;
 
     @Before
     public void init() {
         manager = PowerMockito.mock(MappingManager.class);
         mapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(PagingStateDao.class)).thenReturn(mapper);
+        PowerMockito.when(manager.mapper(PagingStateDto.class)).thenReturn(mapper);
     }
 
     @Test
@@ -49,14 +49,14 @@ public class PaginationQueryTest {
     @Test
     public void testGet() {
         PowerMockito.when(mapper.get(any(UUID.class))).thenReturn(tc.PAGING_STATE);
-        Optional<PagingStateDao> result = PaginationQuery.get(manager, tc.PAGING_ID);
+        Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
         verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
         assertEquals(result.get(), tc.PAGING_STATE);
     }
 
     @Test
     public void testGetNullPagingState() {
-        Optional<PagingStateDao> result = PaginationQuery.get(manager, tc.PAGING_ID);
+        Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
         PowerMockito.when(mapper.get(tc.PAGING_ID)).thenReturn(null);
         verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
         assertFalse(result.isPresent());

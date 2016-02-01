@@ -13,7 +13,7 @@ import com.kenzan.msl.catalog.client.cassandra.query.AlbumsQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.ArtistsQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.PaginationQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.SongsQuery;
-import com.kenzan.msl.catalog.client.dao.*;
+import com.kenzan.msl.catalog.client.dto.*;
 import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Test;
@@ -68,40 +68,40 @@ public class CassandraCatalogServiceTest {
         manager = PowerMockito.mock(MappingManager.class);
         PowerMockito.whenNew(MappingManager.class).withAnyArguments().thenReturn(manager);
 
-        Mapper<FeaturedAlbumsDao> myFeaturedAlbumsMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(FeaturedAlbumsDao.class)).thenReturn(myFeaturedAlbumsMapper);
+        Mapper<FeaturedAlbumsDto> myFeaturedAlbumsMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(FeaturedAlbumsDto.class)).thenReturn(myFeaturedAlbumsMapper);
         PowerMockito.when(myFeaturedAlbumsMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<AlbumsByFacetDao> myAlbumsByFacetMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(AlbumsByFacetDao.class)).thenReturn(myAlbumsByFacetMapper);
+        Mapper<AlbumsByFacetDto> myAlbumsByFacetMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(AlbumsByFacetDto.class)).thenReturn(myAlbumsByFacetMapper);
         PowerMockito.when(myAlbumsByFacetMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<AlbumArtistBySongDao> myAlbumArtistBySongMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(AlbumArtistBySongDao.class)).thenReturn(myAlbumArtistBySongMapper);
+        Mapper<AlbumArtistBySongDto> myAlbumArtistBySongMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(AlbumArtistBySongDto.class)).thenReturn(myAlbumArtistBySongMapper);
         PowerMockito.when(myAlbumArtistBySongMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<FeaturedArtistsDao> myFeaturedArtistsMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(FeaturedArtistsDao.class)).thenReturn(myFeaturedArtistsMapper);
+        Mapper<FeaturedArtistsDto> myFeaturedArtistsMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(FeaturedArtistsDto.class)).thenReturn(myFeaturedArtistsMapper);
         PowerMockito.when(myFeaturedArtistsMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<FeaturedSongsDao> myFeaturedSongsMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(FeaturedSongsDao.class)).thenReturn(myFeaturedSongsMapper);
+        Mapper<FeaturedSongsDto> myFeaturedSongsMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(FeaturedSongsDto.class)).thenReturn(myFeaturedSongsMapper);
         PowerMockito.when(myFeaturedSongsMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<SongsByFacetDao> mySongsByFacetMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(SongsByFacetDao.class)).thenReturn(mySongsByFacetMapper);
+        Mapper<SongsByFacetDto> mySongsByFacetMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(SongsByFacetDto.class)).thenReturn(mySongsByFacetMapper);
         PowerMockito.when(mySongsByFacetMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<ArtistsByFacetDao> myArtistsByFacetMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(ArtistsByFacetDao.class)).thenReturn(myArtistsByFacetMapper);
+        Mapper<ArtistsByFacetDto> myArtistsByFacetMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(ArtistsByFacetDto.class)).thenReturn(myArtistsByFacetMapper);
         PowerMockito.when(myArtistsByFacetMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<SongsAlbumsByArtistDao> mySongsAlbumsByArtistMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(SongsAlbumsByArtistDao.class)).thenReturn(mySongsAlbumsByArtistMapper);
+        Mapper<SongsAlbumsByArtistDto> mySongsAlbumsByArtistMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(SongsAlbumsByArtistDto.class)).thenReturn(mySongsAlbumsByArtistMapper);
         PowerMockito.when(mySongsAlbumsByArtistMapper.map(resultSet)).thenReturn(null);
 
-        Mapper<SongsArtistByAlbumDao> mySongsArtistByAlbumMapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(SongsArtistByAlbumDao.class)).thenReturn(mySongsArtistByAlbumMapper);
+        Mapper<SongsArtistByAlbumDto> mySongsArtistByAlbumMapper = PowerMockito.mock(Mapper.class);
+        PowerMockito.when(manager.mapper(SongsArtistByAlbumDto.class)).thenReturn(mySongsArtistByAlbumMapper);
         PowerMockito.when(mySongsArtistByAlbumMapper.map(resultSet)).thenReturn(null);
 
         PowerMockito.mockStatic(PaginationQuery.class);
@@ -123,7 +123,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<PagingStateDao> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
+        Observable<PagingStateDto> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
         assertEquals(results.toBlocking().first(), tc.PAGING_STATE);
     }
 
@@ -134,7 +134,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<PagingStateDao> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
+        Observable<PagingStateDto> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
         assertTrue(results.isEmpty().toBlocking().first());
     }
 
@@ -179,7 +179,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<FeaturedAlbumsDao>> results = cassandraCatalogService.mapFeaturedAlbums(observableResultSet);
+        Observable<Result<FeaturedAlbumsDto>> results = cassandraCatalogService.mapFeaturedAlbums(observableResultSet);
         assertNull(results.toBlocking().first());
     }
 
@@ -201,7 +201,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<AlbumsByFacetDao>> results = cassandraCatalogService.mapAlbumsByFacet(observableResultSet);
+        Observable<Result<AlbumsByFacetDto>> results = cassandraCatalogService.mapAlbumsByFacet(observableResultSet);
         assertNull(results.toBlocking().first());
     }
 
@@ -224,7 +224,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<AlbumArtistBySongDao>> results = cassandraCatalogService
+        Observable<Result<AlbumArtistBySongDto>> results = cassandraCatalogService
             .mapAlbumArtistBySong(observableResultSet);
         assertNull(results.toBlocking().first());
     }
@@ -252,7 +252,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<FeaturedArtistsDao>> results = cassandraCatalogService
+        Observable<Result<FeaturedArtistsDto>> results = cassandraCatalogService
             .mapFeaturedArtists(observableResultSet);
         assertNull(results.toBlocking().first());
     }
@@ -276,7 +276,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<ArtistsByFacetDao>> results = cassandraCatalogService.mapArtistByFacet(observableResultSet);
+        Observable<Result<ArtistsByFacetDto>> results = cassandraCatalogService.mapArtistByFacet(observableResultSet);
         assertNull(results.toBlocking().first());
     }
 
@@ -303,7 +303,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<FeaturedSongsDao>> results = cassandraCatalogService.mapFeaturedSongs(observableResultSet);
+        Observable<Result<FeaturedSongsDto>> results = cassandraCatalogService.mapFeaturedSongs(observableResultSet);
         assertNull(results.toBlocking().first());
     }
 
@@ -326,7 +326,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<SongsByFacetDao>> results = cassandraCatalogService.mapSongsByFacet(observableResultSet);
+        Observable<Result<SongsByFacetDto>> results = cassandraCatalogService.mapSongsByFacet(observableResultSet);
         assertNull(results.toBlocking().first());
     }
 
@@ -350,7 +350,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<SongsAlbumsByArtistDao>> results = cassandraCatalogService
+        Observable<Result<SongsAlbumsByArtistDto>> results = cassandraCatalogService
             .mapSongsAlbumsByArtist(observableResultSet);
         assertNull(results.toBlocking().first());
     }
@@ -375,7 +375,7 @@ public class CassandraCatalogServiceTest {
         PowerMock.replayAll();
 
         cassandraCatalogService = CassandraCatalogService.getInstance();
-        Observable<Result<SongsArtistByAlbumDao>> results = cassandraCatalogService
+        Observable<Result<SongsArtistByAlbumDto>> results = cassandraCatalogService
             .mapSongsArtistByAlbum(observableResultSet);
         assertNull(results.toBlocking().first());
     }

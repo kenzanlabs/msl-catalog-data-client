@@ -1,7 +1,7 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -12,27 +12,25 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- *
- *
  * @author billschwanitz
  */
-@Table(name = "songs_albums_by_artist")
-public class SongsAlbumsByArtistDao {
+@Table(name = "songs_album_by_album")
+public class SongsArtistByAlbumDto {
     @PartitionKey
-    @Column(name = "artist_id")
-    private UUID artistId;
-    @Column(name = "album_year")
-    private int albumYear;
-    @Column(name = "album_name")
-    private String albumName;
     @Column(name = "album_id")
     private UUID albumId;
     @Column(name = "song_name")
     private String songName;
     @Column(name = "song_id")
     private UUID songId;
+    @Column(name = "album_name")
+    private String albumName;
+    @Column(name = "album_year")
+    private int albumYear;
     @Column(name = "artist_genres")
     private Set<String> artistGenres;
+    @Column(name = "artist_id")
+    private UUID artistId;
     @Column(name = "artist_mbid")
     private String artistMbid;
     @Column(name = "artist_name")
@@ -43,62 +41,6 @@ public class SongsAlbumsByArtistDao {
     private int songDuration;
     @Column(name = "image_link")
     private String imageLink;
-
-    /**
-     * @return the image url
-     */
-    public String getImageLink() {
-        return imageLink;
-    }
-
-    /**
-     * @param imageLink url of the image
-     */
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
-    }
-
-    /**
-     * @return the artistId
-     */
-    public UUID getArtistId() {
-        return artistId;
-    }
-
-    /**
-     * @param artistId the artistId to set
-     */
-    public void setArtistId(UUID artistId) {
-        this.artistId = artistId;
-    }
-
-    /**
-     * @return the albumYear
-     */
-    public int getAlbumYear() {
-        return albumYear;
-    }
-
-    /**
-     * @param albumYear the albumYear to set
-     */
-    public void setAlbumYear(int albumYear) {
-        this.albumYear = albumYear;
-    }
-
-    /**
-     * @return the albumName
-     */
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    /**
-     * @param albumName the albumName to set
-     */
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
 
     /**
      * @return the albumId
@@ -143,6 +85,34 @@ public class SongsAlbumsByArtistDao {
     }
 
     /**
+     * @return the albumName
+     */
+    public String getAlbumName() {
+        return albumName;
+    }
+
+    /**
+     * @param albumName the albumName to set
+     */
+    public void setAlbumName(String albumName) {
+        this.albumName = albumName;
+    }
+
+    /**
+     * @return the albumYear
+     */
+    public int getAlbumYear() {
+        return albumYear;
+    }
+
+    /**
+     * @param albumYear the albumYear to set
+     */
+    public void setAlbumYear(int albumYear) {
+        this.albumYear = albumYear;
+    }
+
+    /**
      * @return the artistGenres
      */
     public Set<String> getArtistGenres() {
@@ -154,6 +124,20 @@ public class SongsAlbumsByArtistDao {
      */
     public void setArtistGenres(Set<String> artistGenres) {
         this.artistGenres = artistGenres;
+    }
+
+    /**
+     * @return the artistId
+     */
+    public UUID getArtistId() {
+        return artistId;
+    }
+
+    /**
+     * @param artistId the artistId to set
+     */
+    public void setArtistId(UUID artistId) {
+        this.artistId = artistId;
     }
 
     /**
@@ -210,5 +194,19 @@ public class SongsAlbumsByArtistDao {
      */
     public void setSongDuration(int songDuration) {
         this.songDuration = songDuration;
+    }
+
+    /**
+     * @return the imageLink
+     */
+    public String getImageLink() {
+        return imageLink;
+    }
+
+    /**
+     * @param imageLink the imageLink to set
+     */
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 }
