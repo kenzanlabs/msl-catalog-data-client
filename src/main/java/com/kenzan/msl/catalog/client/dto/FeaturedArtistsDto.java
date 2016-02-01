@@ -1,12 +1,12 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
-import com.kenzan.msl.common.dao.AbstractArtistDao;
+import com.kenzan.msl.common.dto.AbstractArtistDto;
 
 import java.util.UUID;
 
@@ -15,14 +15,16 @@ import java.util.UUID;
  *
  * @author billschwanitz
  */
-@Table(name = "artists_by_facet")
-public class ArtistsByFacetDao extends AbstractArtistDao {
+@Table(name = "featured_artists")
+public class FeaturedArtistsDto extends AbstractArtistDto {
     @PartitionKey(value = 0)
-    @Column(name = "facet_name")
-    private String facetName;
+    @Column(name = "hotness_bucket")
+    private String hotnessBucket;
     @PartitionKey(value = 1)
     @Column(name = "content_type")
     private String contentType;
+    @Column(name = "hotness_value")
+    private Float hotnessValue;
     @Column(name = "artist_id")
     private UUID artistId;
     @Column(name = "artist_name")
@@ -47,17 +49,17 @@ public class ArtistsByFacetDao extends AbstractArtistDao {
     }
 
     /**
-     * @return the facetName
+     * @return the hotnessBucket
      */
-    public String getFacetName() {
-        return facetName;
+    public String getHotnessBucket() {
+        return hotnessBucket;
     }
 
     /**
-     * @param facetName the facetName to set
+     * @param hotnessBucket the hotnessBucket to set
      */
-    public void setFacetName(String facetName) {
-        this.facetName = facetName;
+    public void setHotnessBucket(String hotnessBucket) {
+        this.hotnessBucket = hotnessBucket;
     }
 
     /**
@@ -72,6 +74,20 @@ public class ArtistsByFacetDao extends AbstractArtistDao {
      */
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    /**
+     * @return the hotnessValue
+     */
+    public Float getHotnessValue() {
+        return hotnessValue;
+    }
+
+    /**
+     * @param hotnessValue the hotnessValue to set
+     */
+    public void setHotnessValue(Float hotnessValue) {
+        this.hotnessValue = hotnessValue;
     }
 
     /**

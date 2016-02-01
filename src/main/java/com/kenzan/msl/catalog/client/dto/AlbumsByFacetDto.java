@@ -1,12 +1,12 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
-import com.kenzan.msl.common.dao.AbstractAlbumDao;
+import com.kenzan.msl.common.dto.AbstractAlbumDto;
 
 import java.util.UUID;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 
 @Table(name = "albums_by_facet")
-public class AlbumsByFacetDao extends AbstractAlbumDao {
+public class AlbumsByFacetDto extends AbstractAlbumDto {
     @PartitionKey(value = 0)
     @Column(name = "facet_name")
     private String facetName;

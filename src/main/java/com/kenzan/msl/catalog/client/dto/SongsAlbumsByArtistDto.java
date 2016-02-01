@@ -1,7 +1,7 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -16,21 +16,23 @@ import java.util.UUID;
  *
  * @author billschwanitz
  */
-@Table(name = "album_artist_by_song")
-public class AlbumArtistBySongDao {
+@Table(name = "songs_albums_by_artist")
+public class SongsAlbumsByArtistDto {
     @PartitionKey
-    @Column(name = "song_id")
-    private UUID songId;
-    @Column(name = "album_id")
-    private UUID albumId;
-    @Column(name = "album_name")
-    private String albumName;
-    @Column(name = "album_year")
-    private Integer albumYear;
-    @Column(name = "artist_genres")
-    private Set<String> artistGenres;
     @Column(name = "artist_id")
     private UUID artistId;
+    @Column(name = "album_year")
+    private int albumYear;
+    @Column(name = "album_name")
+    private String albumName;
+    @Column(name = "album_id")
+    private UUID albumId;
+    @Column(name = "song_name")
+    private String songName;
+    @Column(name = "song_id")
+    private UUID songId;
+    @Column(name = "artist_genres")
+    private Set<String> artistGenres;
     @Column(name = "artist_mbid")
     private String artistMbid;
     @Column(name = "artist_name")
@@ -38,9 +40,7 @@ public class AlbumArtistBySongDao {
     @Column(name = "similar_artists")
     private Map<UUID, String> similarArtists;
     @Column(name = "song_duration")
-    private Integer songDuration;
-    @Column(name = "song_name")
-    private String songName;
+    private int songDuration;
     @Column(name = "image_link")
     private String imageLink;
 
@@ -59,31 +59,31 @@ public class AlbumArtistBySongDao {
     }
 
     /**
-     * @return the songId
+     * @return the artistId
      */
-    public UUID getSongId() {
-        return songId;
+    public UUID getArtistId() {
+        return artistId;
     }
 
     /**
-     * @param songId the songId to set
+     * @param artistId the artistId to set
      */
-    public void setSongId(UUID songId) {
-        this.songId = songId;
+    public void setArtistId(UUID artistId) {
+        this.artistId = artistId;
     }
 
     /**
-     * @return the albumId
+     * @return the albumYear
      */
-    public UUID getAlbumId() {
-        return albumId;
+    public int getAlbumYear() {
+        return albumYear;
     }
 
     /**
-     * @param albumId the albumId to set
+     * @param albumYear the albumYear to set
      */
-    public void setAlbumId(UUID albumId) {
-        this.albumId = albumId;
+    public void setAlbumYear(int albumYear) {
+        this.albumYear = albumYear;
     }
 
     /**
@@ -101,17 +101,45 @@ public class AlbumArtistBySongDao {
     }
 
     /**
-     * @return the albumYear
+     * @return the albumId
      */
-    public Integer getAlbumYear() {
-        return albumYear;
+    public UUID getAlbumId() {
+        return albumId;
     }
 
     /**
-     * @param albumYear the albumYear to set
+     * @param albumId the albumId to set
      */
-    public void setAlbumYear(Integer albumYear) {
-        this.albumYear = albumYear;
+    public void setAlbumId(UUID albumId) {
+        this.albumId = albumId;
+    }
+
+    /**
+     * @return the songName
+     */
+    public String getSongName() {
+        return songName;
+    }
+
+    /**
+     * @param songName the songName to set
+     */
+    public void setSongName(String songName) {
+        this.songName = songName;
+    }
+
+    /**
+     * @return the songId
+     */
+    public UUID getSongId() {
+        return songId;
+    }
+
+    /**
+     * @param songId the songId to set
+     */
+    public void setSongId(UUID songId) {
+        this.songId = songId;
     }
 
     /**
@@ -126,20 +154,6 @@ public class AlbumArtistBySongDao {
      */
     public void setArtistGenres(Set<String> artistGenres) {
         this.artistGenres = artistGenres;
-    }
-
-    /**
-     * @return the artistId
-     */
-    public UUID getArtistId() {
-        return artistId;
-    }
-
-    /**
-     * @param artistId the artistId to set
-     */
-    public void setArtistId(UUID artistId) {
-        this.artistId = artistId;
     }
 
     /**
@@ -187,28 +201,14 @@ public class AlbumArtistBySongDao {
     /**
      * @return the songDuration
      */
-    public Integer getSongDuration() {
+    public int getSongDuration() {
         return songDuration;
     }
 
     /**
      * @param songDuration the songDuration to set
      */
-    public void setSongDuration(Integer songDuration) {
+    public void setSongDuration(int songDuration) {
         this.songDuration = songDuration;
-    }
-
-    /**
-     * @return the songName
-     */
-    public String getSongName() {
-        return songName;
-    }
-
-    /**
-     * @param songName the songName to set
-     */
-    public void setSongName(String songName) {
-        this.songName = songName;
     }
 }

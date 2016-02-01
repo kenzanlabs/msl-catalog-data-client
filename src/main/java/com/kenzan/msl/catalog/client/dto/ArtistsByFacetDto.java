@@ -1,12 +1,12 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
-import com.kenzan.msl.common.dao.AbstractAlbumDao;
+import com.kenzan.msl.common.dto.AbstractArtistDto;
 
 import java.util.UUID;
 
@@ -15,22 +15,14 @@ import java.util.UUID;
  *
  * @author billschwanitz
  */
-@Table(name = "featured_albums")
-public class FeaturedAlbumsDao extends AbstractAlbumDao {
+@Table(name = "artists_by_facet")
+public class ArtistsByFacetDto extends AbstractArtistDto {
     @PartitionKey(value = 0)
-    @Column(name = "hotness_bucket")
-    private String hotnessBucket;
+    @Column(name = "facet_name")
+    private String facetName;
     @PartitionKey(value = 1)
     @Column(name = "content_type")
     private String contentType;
-    @Column(name = "hotness_value")
-    private Float hotnessValue;
-    @Column(name = "album_id")
-    private UUID albumId;
-    @Column(name = "album_name")
-    private String albumName;
-    @Column(name = "album_year")
-    private int albumYear;
     @Column(name = "artist_id")
     private UUID artistId;
     @Column(name = "artist_name")
@@ -41,33 +33,31 @@ public class FeaturedAlbumsDao extends AbstractAlbumDao {
     private String imageLink;
 
     /**
-     * @return the imageLink
+     * @return the image url
      */
-    @Override
     public String getImageLink() {
         return imageLink;
     }
 
     /**
-     * @param imageLink the imageLink to set
+     * @param imageLink url of the image
      */
-    @Override
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
 
     /**
-     * @return the hotnessBucket
+     * @return the facetName
      */
-    public String getHotnessBucket() {
-        return hotnessBucket;
+    public String getFacetName() {
+        return facetName;
     }
 
     /**
-     * @param hotnessBucket the hotnessBucket to set
+     * @param facetName the facetName to set
      */
-    public void setHotnessBucket(String hotnessBucket) {
-        this.hotnessBucket = hotnessBucket;
+    public void setFacetName(String facetName) {
+        this.facetName = facetName;
     }
 
     /**
@@ -82,68 +72,6 @@ public class FeaturedAlbumsDao extends AbstractAlbumDao {
      */
     public void setContentType(String contentType) {
         this.contentType = contentType;
-    }
-
-    /**
-     * @return the hotnessValue
-     */
-    public Float getHotnessValue() {
-        return hotnessValue;
-    }
-
-    /**
-     * @param hotnessValue the hotnessValue to set
-     */
-    public void setHotnessValue(Float hotnessValue) {
-        this.hotnessValue = hotnessValue;
-    }
-
-    /**
-     * @return the albumId
-     */
-    @Override
-    public UUID getAlbumId() {
-        return albumId;
-    }
-
-    /**
-     * @param albumId the albumId to set
-     */
-    @Override
-    public void setAlbumId(UUID albumId) {
-        this.albumId = albumId;
-    }
-
-    /**
-     * @return the albumName
-     */
-    @Override
-    public String getAlbumName() {
-        return albumName;
-    }
-
-    /**
-     * @param albumName the albumName to set
-     */
-    @Override
-    public void setAlbumName(String albumName) {
-        this.albumName = albumName;
-    }
-
-    /**
-     * @return the albumYear
-     */
-    @Override
-    public int getAlbumYear() {
-        return albumYear;
-    }
-
-    /**
-     * @param albumYear the albumYear to set
-     */
-    @Override
-    public void setAlbumYear(int albumYear) {
-        this.albumYear = albumYear;
     }
 
     /**
@@ -193,4 +121,5 @@ public class FeaturedAlbumsDao extends AbstractAlbumDao {
     public void setArtistMbid(UUID artistMbid) {
         this.artistMbid = artistMbid;
     }
+
 }
