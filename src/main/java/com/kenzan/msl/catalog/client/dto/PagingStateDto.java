@@ -1,7 +1,7 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.Field;
@@ -20,7 +20,7 @@ import java.util.UUID;
  * @author billschwanitz
  */
 @Table(name = "paging_state")
-public class PagingStateDao {
+public class PagingStateDto {
     @PartitionKey
     @Column(name = "user_id")
     private UUID userId;

@@ -181,11 +181,11 @@
                     </check>
                     <instrumentation>
                         <ignores>
-                            <ignore>com.kenzan.msl.catalog.client.dao.*</ignore>
+                            <ignore>com.kenzan.msl.catalog.client.dto.*</ignore>
                         </ignores>
                         <excludes>
                             <exclude>com/kenzan/msl/catalog/client/**/*Test.class</exclude>
-                            <exclude>com/kenzan/msl/catalog/client/dao/*Dao.class</exclude>
+                            <exclude>com/kenzan/msl/catalog/client/dto/*Dto.class</exclude>
                         </excludes>
                     </instrumentation>
                     <formats>

@@ -17,7 +17,7 @@ import com.kenzan.msl.catalog.client.cassandra.query.AlbumsQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.ArtistsQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.PaginationQuery;
 import com.kenzan.msl.catalog.client.cassandra.query.SongsQuery;
-import com.kenzan.msl.catalog.client.dao.*;
+import com.kenzan.msl.catalog.client.dto.*;
 import rx.Observable;
 
 /**
@@ -56,10 +56,10 @@ public class CassandraCatalogService
     /**
      * Adds or update a pagingState
      *
-     * @param pagingState com.kenzan.msl.catalog.client.dao.PagingStateDao
+     * @param pagingState com.kenzan.msl.catalog.client.dto.PagingStateDto
      * @return Observable<Void>
      */
-    public Observable<Void> addOrUpdatePagingState(PagingStateDao pagingState) {
+    public Observable<Void> addOrUpdatePagingState(PagingStateDto pagingState) {
         PaginationQuery.add(mappingManager, pagingState);
         return Observable.empty();
     }
@@ -68,10 +68,10 @@ public class CassandraCatalogService
      * Retrieves a paging state
      *
      * @param pagingStateUuid java.util.UUID
-     * @return Observable<PagingStateDao>
+     * @return Observable<PagingStateDto>
      */
-    public Observable<PagingStateDao> getPagingState(UUID pagingStateUuid) {
-        Optional<PagingStateDao> result = PaginationQuery.get(mappingManager, pagingStateUuid);
+    public Observable<PagingStateDto> getPagingState(UUID pagingStateUuid) {
+        Optional<PagingStateDto> result = PaginationQuery.get(mappingManager, pagingStateUuid);
         if ( result.isPresent() ) {
             return Observable.just(result.get());
         }
@@ -105,13 +105,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a FeaturedAlbumsDao result array
+     * Maps a resultSet object into a FeaturedAlbumsDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<FeaturedAlbumsDao>>
+     * @return Observable<Result<FeaturedAlbumsDto>>
      */
-    public Observable<Result<FeaturedAlbumsDao>> mapFeaturedAlbums(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(FeaturedAlbumsDao.class).map(object.toBlocking().first()));
+    public Observable<Result<FeaturedAlbumsDto>> mapFeaturedAlbums(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(FeaturedAlbumsDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -126,13 +126,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a AlbumsByFacetDao result array
+     * Maps a resultSet object into a AlbumsByFacetDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<AlbumsByFacetDao>>
+     * @return Observable<Result<AlbumsByFacetDto>>
      */
-    public Observable<Result<AlbumsByFacetDao>> mapAlbumsByFacet(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(AlbumsByFacetDao.class).map(object.toBlocking().first()));
+    public Observable<Result<AlbumsByFacetDto>> mapAlbumsByFacet(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(AlbumsByFacetDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -147,13 +147,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a AlbumArtistBySongDao result array
+     * Maps a resultSet object into a AlbumArtistBySongDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<AlbumArtistBySongDao>>
+     * @return Observable<Result<AlbumArtistBySongDto>>
      */
-    public Observable<Result<AlbumArtistBySongDao>> mapAlbumArtistBySong(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(AlbumArtistBySongDao.class).map(object.toBlocking().first()));
+    public Observable<Result<AlbumArtistBySongDto>> mapAlbumArtistBySong(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(AlbumArtistBySongDto.class).map(object.toBlocking().first()));
     }
 
     // =========================================================================================================
@@ -171,13 +171,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a FeaturedArtistsDao result array
+     * Maps a resultSet object into a FeaturedArtistsDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<FeaturedArtistsDao>>
+     * @return Observable<Result<FeaturedArtistsDto>>
      */
-    public Observable<Result<FeaturedArtistsDao>> mapFeaturedArtists(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(FeaturedArtistsDao.class).map(object.toBlocking().first()));
+    public Observable<Result<FeaturedArtistsDto>> mapFeaturedArtists(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(FeaturedArtistsDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -192,13 +192,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a ArtistsByFacetDao result array
+     * Maps a resultSet object into a ArtistsByFacetDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<ArtistsByFacetDao>>
+     * @return Observable<Result<ArtistsByFacetDto>>
      */
-    public Observable<Result<ArtistsByFacetDao>> mapArtistByFacet(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(ArtistsByFacetDao.class).map(object.toBlocking().first()));
+    public Observable<Result<ArtistsByFacetDto>> mapArtistByFacet(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(ArtistsByFacetDto.class).map(object.toBlocking().first()));
     }
 
     // ===========================================================================================================
@@ -216,13 +216,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a FeaturedSongsDao result array
+     * Maps a resultSet object into a FeaturedSongsDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<FeaturedSongsDao>>
+     * @return Observable<Result<FeaturedSongsDto>>
      */
-    public Observable<Result<FeaturedSongsDao>> mapFeaturedSongs(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(FeaturedSongsDao.class).map(object.toBlocking().first()));
+    public Observable<Result<FeaturedSongsDto>> mapFeaturedSongs(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(FeaturedSongsDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -237,13 +237,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a SongsByFacetDao result array
+     * Maps a resultSet object into a SongsByFacetDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<SongsByFacetDao>>
+     * @return Observable<Result<SongsByFacetDto>>
      */
-    public Observable<Result<SongsByFacetDao>> mapSongsByFacet(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(SongsByFacetDao.class).map(object.toBlocking().first()));
+    public Observable<Result<SongsByFacetDto>> mapSongsByFacet(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(SongsByFacetDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -258,13 +258,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a SongsAlbumsByArtistDao result array
+     * Maps a resultSet object into a SongsAlbumsByArtistDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<SongsAlbumsByArtistDao>>
+     * @return Observable<Result<SongsAlbumsByArtistDto>>
      */
-    public Observable<Result<SongsAlbumsByArtistDao>> mapSongsAlbumsByArtist(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(SongsAlbumsByArtistDao.class).map(object.toBlocking().first()));
+    public Observable<Result<SongsAlbumsByArtistDto>> mapSongsAlbumsByArtist(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(SongsAlbumsByArtistDto.class).map(object.toBlocking().first()));
     }
 
     /**
@@ -279,13 +279,13 @@ public class CassandraCatalogService
     }
 
     /**
-     * Maps a resultSet object into a SongsArtistByAlbumDao result array
+     * Maps a resultSet object into a SongsArtistByAlbumDto result array
      *
      * @param object Observable<ResultSet>
-     * @return Observable<Result<SongsArtistByAlbumDao>>
+     * @return Observable<Result<SongsArtistByAlbumDto>>
      */
-    public Observable<Result<SongsArtistByAlbumDao>> mapSongsArtistByAlbum(Observable<ResultSet> object) {
-        return Observable.just(mappingManager.mapper(SongsArtistByAlbumDao.class).map(object.toBlocking().first()));
+    public Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(Observable<ResultSet> object) {
+        return Observable.just(mappingManager.mapper(SongsArtistByAlbumDto.class).map(object.toBlocking().first()));
     }
 
 }

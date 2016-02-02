@@ -1,25 +1,25 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 /**
  * 
  * 
  * @author billschwanitz
  */
-public class FacetDao {
+public class FacetDto {
     private String facetId;
     private String facetName;
 
-    public FacetDao() {
+    public FacetDto() {
     }
 
     /**
      * @param facetId facetId to set
      * @param facetName facetName to set
      */
-    public FacetDao( String facetId, String facetName ) {
+    public FacetDto( String facetId, String facetName ) {
         setFacetId(facetId);
         setFacetName(facetName);
     }
