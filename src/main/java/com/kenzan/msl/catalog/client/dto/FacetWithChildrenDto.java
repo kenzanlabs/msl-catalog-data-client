@@ -1,27 +1,27 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import java.util.List;
 
 /**
  * @author billschwanitz
  */
-public class FacetWithChildrenDao extends FacetDao {
-    private List<FacetDao> children;
+public class FacetWithChildrenDto extends FacetDto {
+    private List<FacetDto> children;
 
     /**
      * @return the children
      */
-    public List<FacetDao> getChildren() {
+    public List<FacetDto> getChildren() {
         return children;
     }
 
     /**
      * @param children the children to set
      */
-    public void setChildren(List<FacetDao> children) {
+    public void setChildren(List<FacetDto> children) {
         this.children = children;
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright 2015, Kenzan, All rights reserved.
  */
-package com.kenzan.msl.catalog.client.dao;
+package com.kenzan.msl.catalog.client.dto;
 
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
@@ -12,21 +12,21 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
+ *
+ *
  * @author billschwanitz
  */
-@Table(name = "songs_album_by_album")
-public class SongsArtistByAlbumDao {
+@Table(name = "album_artist_by_song")
+public class AlbumArtistBySongDto {
     @PartitionKey
-    @Column(name = "album_id")
-    private UUID albumId;
-    @Column(name = "song_name")
-    private String songName;
     @Column(name = "song_id")
     private UUID songId;
+    @Column(name = "album_id")
+    private UUID albumId;
     @Column(name = "album_name")
     private String albumName;
     @Column(name = "album_year")
-    private int albumYear;
+    private Integer albumYear;
     @Column(name = "artist_genres")
     private Set<String> artistGenres;
     @Column(name = "artist_id")
@@ -38,36 +38,24 @@ public class SongsArtistByAlbumDao {
     @Column(name = "similar_artists")
     private Map<UUID, String> similarArtists;
     @Column(name = "song_duration")
-    private int songDuration;
+    private Integer songDuration;
+    @Column(name = "song_name")
+    private String songName;
     @Column(name = "image_link")
     private String imageLink;
 
     /**
-     * @return the albumId
+     * @return the image url
      */
-    public UUID getAlbumId() {
-        return albumId;
+    public String getImageLink() {
+        return imageLink;
     }
 
     /**
-     * @param albumId the albumId to set
+     * @param imageLink url of the image
      */
-    public void setAlbumId(UUID albumId) {
-        this.albumId = albumId;
-    }
-
-    /**
-     * @return the songName
-     */
-    public String getSongName() {
-        return songName;
-    }
-
-    /**
-     * @param songName the songName to set
-     */
-    public void setSongName(String songName) {
-        this.songName = songName;
+    public void setImageLink(String imageLink) {
+        this.imageLink = imageLink;
     }
 
     /**
@@ -82,6 +70,20 @@ public class SongsArtistByAlbumDao {
      */
     public void setSongId(UUID songId) {
         this.songId = songId;
+    }
+
+    /**
+     * @return the albumId
+     */
+    public UUID getAlbumId() {
+        return albumId;
+    }
+
+    /**
+     * @param albumId the albumId to set
+     */
+    public void setAlbumId(UUID albumId) {
+        this.albumId = albumId;
     }
 
     /**
@@ -101,14 +103,14 @@ public class SongsArtistByAlbumDao {
     /**
      * @return the albumYear
      */
-    public int getAlbumYear() {
+    public Integer getAlbumYear() {
         return albumYear;
     }
 
     /**
      * @param albumYear the albumYear to set
      */
-    public void setAlbumYear(int albumYear) {
+    public void setAlbumYear(Integer albumYear) {
         this.albumYear = albumYear;
     }
 
@@ -185,28 +187,28 @@ public class SongsArtistByAlbumDao {
     /**
      * @return the songDuration
      */
-    public int getSongDuration() {
+    public Integer getSongDuration() {
         return songDuration;
     }
 
     /**
      * @param songDuration the songDuration to set
      */
-    public void setSongDuration(int songDuration) {
+    public void setSongDuration(Integer songDuration) {
         this.songDuration = songDuration;
     }
 
     /**
-     * @return the imageLink
+     * @return the songName
      */
-    public String getImageLink() {
-        return imageLink;
+    public String getSongName() {
+        return songName;
     }
 
     /**
-     * @param imageLink the imageLink to set
+     * @param songName the songName to set
      */
-    public void setImageLink(String imageLink) {
-        this.imageLink = imageLink;
+    public void setSongName(String songName) {
+        this.songName = songName;
     }
 }
