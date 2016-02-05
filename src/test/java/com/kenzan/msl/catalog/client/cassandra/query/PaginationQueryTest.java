@@ -17,7 +17,10 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.anyObject;
+import static org.mockito.Mockito.any;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ MappingManager.class, Mapper.class })
