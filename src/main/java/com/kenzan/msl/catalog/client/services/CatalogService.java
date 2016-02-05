@@ -6,7 +6,16 @@ package com.kenzan.msl.catalog.client.services;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.mapping.Result;
 import com.google.common.base.Optional;
-import com.kenzan.msl.catalog.client.dto.*;
+import com.kenzan.msl.catalog.client.dto.PagingStateDto;
+import com.kenzan.msl.catalog.client.dto.FeaturedAlbumsDto;
+import com.kenzan.msl.catalog.client.dto.AlbumsByFacetDto;
+import com.kenzan.msl.catalog.client.dto.AlbumArtistBySongDto;
+import com.kenzan.msl.catalog.client.dto.FeaturedSongsDto;
+import com.kenzan.msl.catalog.client.dto.FeaturedArtistsDto;
+import com.kenzan.msl.catalog.client.dto.ArtistsByFacetDto;
+import com.kenzan.msl.catalog.client.dto.SongsByFacetDto;
+import com.kenzan.msl.catalog.client.dto.SongsAlbumsByArtistDto;
+import com.kenzan.msl.catalog.client.dto.SongsArtistByAlbumDto;
 import rx.Observable;
 
 import java.util.UUID;
