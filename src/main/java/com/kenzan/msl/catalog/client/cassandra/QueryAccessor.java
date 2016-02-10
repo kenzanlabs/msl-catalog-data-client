@@ -1,3 +1,6 @@
+/*
+ * Copyright 2015, Kenzan, All rights reserved.
+ */
 package com.kenzan.msl.catalog.client.cassandra;
 
 import com.datastax.driver.core.ResultSet;
