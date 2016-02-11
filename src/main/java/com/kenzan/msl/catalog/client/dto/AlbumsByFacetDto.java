@@ -11,7 +11,7 @@ import com.kenzan.msl.common.dto.AbstractAlbumDto;
 import java.util.UUID;
 
 /**
- * @author billschwanitz
+ * @author kenzan
  */
 
 @Table(name = "albums_by_facet")
