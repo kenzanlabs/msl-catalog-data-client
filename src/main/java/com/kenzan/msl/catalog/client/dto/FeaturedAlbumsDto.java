@@ -134,7 +134,7 @@ public class FeaturedAlbumsDto extends AbstractAlbumDto {
      * @return the albumYear
      */
     @Override
-    public int getAlbumYear() {
+    public Integer getAlbumYear() {
         return albumYear;
     }
 
@@ -142,7 +142,7 @@ public class FeaturedAlbumsDto extends AbstractAlbumDto {
      * @param albumYear the albumYear to set
      */
     @Override
-    public void setAlbumYear(int albumYear) {
+    public void setAlbumYear(Integer albumYear) {
         this.albumYear = albumYear;
     }
 
