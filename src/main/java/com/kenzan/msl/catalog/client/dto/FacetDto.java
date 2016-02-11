@@ -6,7 +6,7 @@ package com.kenzan.msl.catalog.client.dto;
 /**
  * 
  * 
- * @author billschwanitz
+ * @author kenzan
  */
 public class FacetDto {
     private String facetId;

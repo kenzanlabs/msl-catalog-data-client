@@ -14,7 +14,7 @@ import java.util.UUID;
 /**
  *
  *
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "songs_albums_by_artist")
 public class SongsAlbumsByArtistDto {
