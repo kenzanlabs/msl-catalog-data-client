@@ -9,6 +9,7 @@ import com.datastax.driver.mapping.annotations.Frozen;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
 import com.datastax.driver.mapping.annotations.UDT;
+import com.kenzan.msl.common.dto.AbstractDto;
 
 import java.nio.ByteBuffer;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.UUID;
  * @author billschwanitz
  */
 @Table(name = "paging_state")
-public class PagingStateDto {
+public class PagingStateDto extends AbstractDto {
     @PartitionKey
     @Column(name = "user_id")
     private UUID userId;
@@ -119,7 +120,7 @@ public class PagingStateDto {
 
         /**
          * Get the blob data out of the ByteBuffer as an byte[]
-         * 
+         *
          * @return a byte[] containing the BLOB, or null if pageState is null
          */
         public byte[] getPageStateBlob() {

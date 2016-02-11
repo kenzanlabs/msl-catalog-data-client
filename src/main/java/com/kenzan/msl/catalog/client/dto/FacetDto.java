@@ -3,12 +3,14 @@
  */
 package com.kenzan.msl.catalog.client.dto;
 
+import com.kenzan.msl.common.dto.AbstractDto;
+
 /**
  * 
  * 
  * @author billschwanitz
  */
-public class FacetDto {
+public class FacetDto extends AbstractDto {
     private String facetId;
     private String facetName;
 

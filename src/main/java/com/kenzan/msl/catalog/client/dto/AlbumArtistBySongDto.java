@@ -6,6 +6,7 @@ package com.kenzan.msl.catalog.client.dto;
 import com.datastax.driver.mapping.annotations.Column;
 import com.datastax.driver.mapping.annotations.PartitionKey;
 import com.datastax.driver.mapping.annotations.Table;
+import com.kenzan.msl.common.dto.AbstractDto;
 
 import java.util.Map;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.UUID;
  * @author billschwanitz
  */
 @Table(name = "album_artist_by_song")
-public class AlbumArtistBySongDto {
+public class AlbumArtistBySongDto extends AbstractDto {
     @PartitionKey
     @Column(name = "song_id")
     private UUID songId;
