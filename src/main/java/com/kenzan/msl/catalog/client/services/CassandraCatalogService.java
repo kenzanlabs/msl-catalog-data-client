@@ -38,7 +38,7 @@ public class CassandraCatalogService
 
     private CassandraCatalogService() {
         String configUrl = "file://" + System.getProperty("user.dir");
-        configUrl += "/../msl-catalog-data-client-config/archaius-config.properties";
+        configUrl += "/../msl-catalog-data-client-config/data-client-config.properties";
         String additionalUrlsProperty = "archaius.configurationSource.additionalUrls";
         System.setProperty(additionalUrlsProperty, configUrl);
 
