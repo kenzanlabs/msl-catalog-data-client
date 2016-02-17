@@ -3,6 +3,7 @@
  */
 package com.kenzan.msl.catalog.client.services;
 
+import com.kenzan.msl.catalog.client.archaius.ArchaiusHelper;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
 import com.datastax.driver.core.Cluster;
@@ -46,11 +47,7 @@ public class CassandraCatalogService
     private static CassandraCatalogService instance = null;
 
     private CassandraCatalogService() {
-        String configUrl = "file://" + System.getProperty("user.dir");
-        configUrl += "/../msl-catalog-data-client-config/data-client-config.properties";
-        String additionalUrlsProperty = "archaius.configurationSource.additionalUrls";
-        System.setProperty(additionalUrlsProperty, configUrl);
-
+        ArchaiusHelper.setupArchaius();
         DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
         DynamicStringProperty contactPoint = propertyFactory.getStringProperty("contact_point", DEFAULT_CONTACT_POINT);
         Cluster cluster = Cluster.builder().addContactPoint(contactPoint.getValue()).build();
