@@ -18,7 +18,7 @@ import java.util.UUID;
 /**
  *
  *
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "paging_state")
 public class PagingStateDto extends AbstractDto {

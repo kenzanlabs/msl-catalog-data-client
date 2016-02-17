@@ -13,7 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 
 /**
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "songs_album_by_album")
 public class SongsArtistByAlbumDto extends AbstractDto {

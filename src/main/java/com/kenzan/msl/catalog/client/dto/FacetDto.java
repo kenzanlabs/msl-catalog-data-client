@@ -8,7 +8,7 @@ import com.kenzan.msl.common.dto.AbstractDto;
 /**
  * 
  * 
- * @author billschwanitz
+ * @author kenzan
  */
 public class FacetDto extends AbstractDto {
     private String facetId;
