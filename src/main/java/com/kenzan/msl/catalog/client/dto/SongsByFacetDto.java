@@ -11,7 +11,7 @@ import com.kenzan.msl.common.dto.AbstractSongDto;
 import java.util.UUID;
 
 /**
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "songs_by_facet")
 public class SongsByFacetDto extends AbstractSongDto {

@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  *
  *
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "artists_by_facet")
 public class ArtistsByFacetDto extends AbstractArtistDto {

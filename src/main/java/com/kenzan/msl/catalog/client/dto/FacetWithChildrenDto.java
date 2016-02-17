@@ -6,7 +6,7 @@ package com.kenzan.msl.catalog.client.dto;
 import java.util.List;
 
 /**
- * @author billschwanitz
+ * @author kenzan
  */
 public class FacetWithChildrenDto extends FacetDto {
     private List<FacetDto> children;

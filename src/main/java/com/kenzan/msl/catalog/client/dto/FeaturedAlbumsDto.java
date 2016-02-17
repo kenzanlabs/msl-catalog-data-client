@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  *
  *
- * @author billschwanitz
+ * @author kenzan
  */
 @Table(name = "featured_albums")
 public class FeaturedAlbumsDto extends AbstractAlbumDto {
