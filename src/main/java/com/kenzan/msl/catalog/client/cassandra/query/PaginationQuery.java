@@ -24,7 +24,7 @@ public class PaginationQuery {
         ArchaiusHelper.setupArchaius();
         DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
         DynamicIntProperty ttlSecs = propertyFactory.getIntProperty("paging_state_ttl_secs", DEFAULT_TTL_SECS);
-        pagingState.getPagingState().setPageState(null);
+        pagingState.getPagingState().setPageState(pagingState.getPagingState().getPageState());
         manager.mapper(PagingStateDto.class).save(pagingState, Mapper.Option.ttl(ttlSecs.getValue()));
     }
 
