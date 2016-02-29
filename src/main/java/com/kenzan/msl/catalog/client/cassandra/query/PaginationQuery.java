@@ -33,7 +33,7 @@ public class PaginationQuery {
      *
      * @param manager com.datastax.driver.mapping.MappingManager
      * @param pagingId java.util.UUID
-     * @return Optional.PagingStateDto
+     * @return Optional&lt;PagingStateDto&gt;
      */
     public static Optional<PagingStateDto> get(final MappingManager manager, final UUID pagingId) {
         Mapper<PagingStateDto> mapper = manager.mapper(PagingStateDto.class);
