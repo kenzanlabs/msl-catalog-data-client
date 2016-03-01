@@ -74,7 +74,7 @@ public class CassandraCatalogService
      * Adds or update a pagingState
      *
      * @param pagingState com.kenzan.msl.catalog.client.dto.PagingStateDto
-     * @return Observable.Void
+     * @return Observable&lt;Void&gt;
      */
     public Observable<Void> addOrUpdatePagingState(PagingStateDto pagingState) {
         PaginationQuery.add(mappingManager, pagingState);
@@ -85,7 +85,7 @@ public class CassandraCatalogService
      * Retrieves a paging state
      *
      * @param pagingStateUuid java.util.UUID
-     * @return Observable.PagingStateDto
+     * @return Observable&lt;PagingStateDto&gt;
      */
     public Observable<PagingStateDto> getPagingState(UUID pagingStateUuid) {
         Optional<PagingStateDto> result = PaginationQuery.get(mappingManager, pagingStateUuid);
@@ -100,7 +100,7 @@ public class CassandraCatalogService
      * Deletes a paging state by its id
      *
      * @param pagingStateUuid java.util.UUID
-     * @return Observable.Void
+     * @return Observable&lt;Void&gt;
      */
     public Observable<Void> deletePagingState(UUID pagingStateUuid) {
         PaginationQuery.remove(mappingManager, pagingStateUuid);
@@ -114,8 +114,8 @@ public class CassandraCatalogService
     /**
      * Retrieves a list of albums optionally limited
      *
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getFeaturedAlbums(Optional<Integer> limit) {
         return Observable.just(AlbumsQuery.getAlbums(queryAccessor, Optional.absent(), limit));
@@ -124,8 +124,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a FeaturedAlbumsDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.FeaturedAlbumsDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;FeaturedAlbumsDto&gt;&gt;
      */
     public Observable<Result<FeaturedAlbumsDto>> mapFeaturedAlbums(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(FeaturedAlbumsDto.class).map(object.toBlocking().first()));
@@ -135,8 +135,8 @@ public class CassandraCatalogService
      * Retrieves a list of albums filtered by a specific facet, optionally limited
      *
      * @param facetName String
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getAlbumsByFacet(String facetName, Optional<Integer> limit) {
         return Observable.just(AlbumsQuery.getAlbums(queryAccessor, Optional.of(facetName), limit));
@@ -145,8 +145,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a AlbumsByFacetDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.AlbumsByFacetDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;AlbumsByFacetDto&gt;&gt;
      */
     public Observable<Result<AlbumsByFacetDto>> mapAlbumsByFacet(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(AlbumsByFacetDto.class).map(object.toBlocking().first()));
@@ -156,8 +156,8 @@ public class CassandraCatalogService
      * Retrieves results from the album_artist_by_song cassandra table
      *
      * @param songUuid java.util.UUID
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getAlbumArtistBySong(UUID songUuid, Optional<Integer> limit) {
         return Observable.just(AlbumsQuery.getAlbumArtistBySong(queryAccessor, songUuid, limit));
@@ -166,8 +166,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a AlbumArtistBySongDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.AlbumArtistBySongDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;AlbumArtistBySongDto&gt;&gt;
      */
     public Observable<Result<AlbumArtistBySongDto>> mapAlbumArtistBySong(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(AlbumArtistBySongDto.class).map(object.toBlocking().first()));
@@ -180,8 +180,8 @@ public class CassandraCatalogService
     /**
      * Retrieves a list of artist optionally limited
      *
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getFeaturedArtists(Optional<Integer> limit) {
         return Observable.just(ArtistsQuery.getArtists(queryAccessor, Optional.absent(), limit));
@@ -190,8 +190,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a FeaturedArtistsDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.FeaturedArtistsDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;FeaturedArtistsDto&gt;&gt;
      */
     public Observable<Result<FeaturedArtistsDto>> mapFeaturedArtists(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(FeaturedArtistsDto.class).map(object.toBlocking().first()));
@@ -201,8 +201,8 @@ public class CassandraCatalogService
      * Retrieves a list of artist filtered by facet, optionally limited
      *
      * @param facetName String
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getArtistsByFacet(String facetName, Optional<Integer> limit) {
         return Observable.just(ArtistsQuery.getArtists(queryAccessor, Optional.of(facetName), limit));
@@ -211,8 +211,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a ArtistsByFacetDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.ArtistsByFacetDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;ArtistsByFacetDto&gt;&gt;
      */
     public Observable<Result<ArtistsByFacetDto>> mapArtistByFacet(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(ArtistsByFacetDto.class).map(object.toBlocking().first()));
@@ -225,8 +225,8 @@ public class CassandraCatalogService
     /**
      * Retrieves a list of songs optionally limited
      *
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getFeaturedSongs(Optional<Integer> limit) {
         return Observable.just(SongsQuery.getSongs(queryAccessor, Optional.absent(), limit));
@@ -235,8 +235,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a FeaturedSongsDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.FeaturedSongsDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;FeaturedSongsDto&gt;&gt;
      */
     public Observable<Result<FeaturedSongsDto>> mapFeaturedSongs(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(FeaturedSongsDto.class).map(object.toBlocking().first()));
@@ -246,8 +246,8 @@ public class CassandraCatalogService
      * Retrieves a list fo songs filtered by a specific facet. Optionally limited
      *
      * @param facetName String
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getSongsByFacets(String facetName, Optional<Integer> limit) {
         return Observable.just(SongsQuery.getSongs(queryAccessor, Optional.of(facetName), limit));
@@ -256,8 +256,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a SongsByFacetDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.SongsByFacetDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;SongsByFacetDto&gt;&gt;
      */
     public Observable<Result<SongsByFacetDto>> mapSongsByFacet(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(SongsByFacetDto.class).map(object.toBlocking().first()));
@@ -267,8 +267,8 @@ public class CassandraCatalogService
      * Retrieves results from the songs_albums_by_artist cassandra table
      *
      * @param artistUuid java.util.UUID
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getSongsAlbumsByArtist(UUID artistUuid, Optional<Integer> limit) {
         return Observable.just(SongsQuery.getSongsAlbumsByArtist(queryAccessor, artistUuid, limit));
@@ -278,7 +278,7 @@ public class CassandraCatalogService
      * Maps a resultSet object into a SongsAlbumsByArtistDto result array
      *
      * @param object Observable.ResultSet
-     * @return Observable.Result.SongsAlbumsByArtistDto
+     * @return Observable&lt;Result&lt;SongsAlbumsByArtistDto&gt;&gt;
      */
     public Observable<Result<SongsAlbumsByArtistDto>> mapSongsAlbumsByArtist(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(SongsAlbumsByArtistDto.class).map(object.toBlocking().first()));
@@ -288,8 +288,8 @@ public class CassandraCatalogService
      * Retrieves results from the songs_artist_by_album cassandra table
      *
      * @param albumUuid java.util.UUID
-     * @param limit Optional.Integer
-     * @return Observable.ResultSet
+     * @param limit Optional&lt;Integer&gt;
+     * @return Observable&lt;ResultSet&gt;
      */
     public Observable<ResultSet> getSongsArtistByAlbum(UUID albumUuid, Optional<Integer> limit) {
         return Observable.just(SongsQuery.getSongsArtistByAlbum(queryAccessor, albumUuid, limit));
@@ -298,8 +298,8 @@ public class CassandraCatalogService
     /**
      * Maps a resultSet object into a SongsArtistByAlbumDto result array
      *
-     * @param object Observable.ResultSet
-     * @return Observable.Result.SongsArtistByAlbumDto
+     * @param object Observable&lt;ResultSet&gt;
+     * @return Observable&lt;Result&lt;SongsArtistByAlbumDto&gt;&gt;
      */
     public Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(Observable<ResultSet> object) {
         return Observable.just(mappingManager.mapper(SongsArtistByAlbumDto.class).map(object.toBlocking().first()));
