@@ -11,46 +11,45 @@ import com.kenzan.msl.common.dto.AbstractDto;
  * @author kenzan
  */
 public class FacetDto extends AbstractDto {
-    private String facetId;
-    private String facetName;
+  private String facetId;
+  private String facetName;
 
-    public FacetDto() {
-    }
+  public FacetDto() {}
 
-    /**
-     * @param facetId facetId to set
-     * @param facetName facetName to set
-     */
-    public FacetDto( String facetId, String facetName ) {
-        setFacetId(facetId);
-        setFacetName(facetName);
-    }
+  /**
+   * @param facetId facetId to set
+   * @param facetName facetName to set
+   */
+  public FacetDto(String facetId, String facetName) {
+    setFacetId(facetId);
+    setFacetName(facetName);
+  }
 
-    /**
-     * @return the facetId
-     */
-    public String getFacetId() {
-        return facetId;
-    }
+  /**
+   * @return the facetId
+   */
+  public String getFacetId() {
+    return facetId;
+  }
 
-    /**
-     * @param facetId the facetId to set
-     */
-    public void setFacetId(String facetId) {
-        this.facetId = facetId;
-    }
+  /**
+   * @param facetId the facetId to set
+   */
+  public void setFacetId(String facetId) {
+    this.facetId = facetId;
+  }
 
-    /**
-     * @return the facetName
-     */
-    public String getFacetName() {
-        return facetName;
-    }
+  /**
+   * @return the facetName
+   */
+  public String getFacetName() {
+    return facetName;
+  }
 
-    /**
-     * @param facetName the facetName to set
-     */
-    public void setFacetName(String facetName) {
-        this.facetName = facetName;
-    }
+  /**
+   * @param facetName the facetName to set
+   */
+  public void setFacetName(String facetName) {
+    this.facetName = facetName;
+  }
 }
