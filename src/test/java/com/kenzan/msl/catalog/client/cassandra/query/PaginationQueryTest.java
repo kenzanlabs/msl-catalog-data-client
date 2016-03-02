@@ -23,57 +23,57 @@ import static org.mockito.Mockito.anyObject;
 import static org.mockito.Mockito.any;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({ MappingManager.class, Mapper.class })
+@PrepareForTest({MappingManager.class, Mapper.class})
 public class PaginationQueryTest {
 
-    TestConstants tc = TestConstants.getInstance();
+  TestConstants tc = TestConstants.getInstance();
 
-    private MappingManager manager;
-    private Mapper<PagingStateDto> mapper;
+  private MappingManager manager;
+  private Mapper<PagingStateDto> mapper;
 
-    @Before
-    public void init() {
-        manager = PowerMockito.mock(MappingManager.class);
-        mapper = PowerMockito.mock(Mapper.class);
-        PowerMockito.when(manager.mapper(PagingStateDto.class)).thenReturn(mapper);
-    }
+  @Before
+  public void init() {
+    manager = PowerMockito.mock(MappingManager.class);
+    mapper = PowerMockito.mock(Mapper.class);
+    PowerMockito.when(manager.mapper(PagingStateDto.class)).thenReturn(mapper);
+  }
 
-    @Test
-    public void testAdd() {
-        PaginationQuery.add(manager, tc.PAGING_STATE);
-        verify(mapper, atLeastOnce()).save(eq(tc.PAGING_STATE), anyObject());
-    }
+  @Test
+  public void testAdd() {
+    PaginationQuery.add(manager, tc.PAGING_STATE);
+    verify(mapper, atLeastOnce()).save(eq(tc.PAGING_STATE), anyObject());
+  }
 
-    @Test(expected = RuntimeException.class)
-    public void testAddException() {
-        PaginationQuery.add(null, tc.PAGING_STATE);
-    }
+  @Test(expected = RuntimeException.class)
+  public void testAddException() {
+    PaginationQuery.add(null, tc.PAGING_STATE);
+  }
 
-    @Test
-    public void testGet() {
-        PowerMockito.when(mapper.get(any(UUID.class))).thenReturn(tc.PAGING_STATE);
-        Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
-        verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
-        assertEquals(result.get(), tc.PAGING_STATE);
-    }
+  @Test
+  public void testGet() {
+    PowerMockito.when(mapper.get(any(UUID.class))).thenReturn(tc.PAGING_STATE);
+    Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
+    verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
+    assertEquals(result.get(), tc.PAGING_STATE);
+  }
 
-    @Test
-    public void testGetNullPagingState() {
-        Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
-        PowerMockito.when(mapper.get(tc.PAGING_ID)).thenReturn(null);
-        verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
-        assertFalse(result.isPresent());
-    }
+  @Test
+  public void testGetNullPagingState() {
+    Optional<PagingStateDto> result = PaginationQuery.get(manager, tc.PAGING_ID);
+    PowerMockito.when(mapper.get(tc.PAGING_ID)).thenReturn(null);
+    verify(mapper, atLeastOnce()).get(tc.PAGING_ID);
+    assertFalse(result.isPresent());
+  }
 
-    @Test
-    public void testRemove() {
-        PaginationQuery.remove(manager, tc.PAGING_ID);
-        verify(mapper, atLeastOnce()).delete(tc.PAGING_ID);
-    }
+  @Test
+  public void testRemove() {
+    PaginationQuery.remove(manager, tc.PAGING_ID);
+    verify(mapper, atLeastOnce()).delete(tc.PAGING_ID);
+  }
 
-    @Test(expected = RuntimeException.class)
-    public void testRemoveException() {
-        PaginationQuery.remove(null, tc.PAGING_ID);
-    }
+  @Test(expected = RuntimeException.class)
+  public void testRemoveException() {
+    PaginationQuery.remove(null, tc.PAGING_ID);
+  }
 
 }
