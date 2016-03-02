@@ -13,37 +13,37 @@ import static org.mockito.internal.verification.VerificationModeFactory.atLeastO
 
 public class ArtistsQueryTest {
 
-    private TestConstants tc = TestConstants.getInstance();
+  private TestConstants tc = TestConstants.getInstance();
 
-    @Mock
-    private QueryAccessor queryAccessor;
+  @Mock
+  private QueryAccessor queryAccessor;
 
-    @Before
-    public void init() {
-        queryAccessor = mock(QueryAccessor.class);
-    }
+  @Before
+  public void init() {
+    queryAccessor = mock(QueryAccessor.class);
+  }
 
-    @Test
-    public void testGetArtistsWithLimitAndFacet() {
-        ArtistsQuery.getArtists(queryAccessor, Optional.of(tc.FACET), Optional.of(tc.LIMIT));
-        verify(queryAccessor, atLeastOnce()).getArtistsByFacetsWithLimit(tc.FACET, tc.LIMIT);
-    }
+  @Test
+  public void testGetArtistsWithLimitAndFacet() {
+    ArtistsQuery.getArtists(queryAccessor, Optional.of(tc.FACET), Optional.of(tc.LIMIT));
+    verify(queryAccessor, atLeastOnce()).getArtistsByFacetsWithLimit(tc.FACET, tc.LIMIT);
+  }
 
-    @Test
-    public void testGetArtistsWithFacet() {
-        ArtistsQuery.getArtists(queryAccessor, Optional.of(tc.FACET), Optional.absent());
-        verify(queryAccessor, atLeastOnce()).getArtistsByFacets(tc.FACET);
-    }
+  @Test
+  public void testGetArtistsWithFacet() {
+    ArtistsQuery.getArtists(queryAccessor, Optional.of(tc.FACET), Optional.absent());
+    verify(queryAccessor, atLeastOnce()).getArtistsByFacets(tc.FACET);
+  }
 
-    @Test
-    public void testGetArtistsWithLimit() {
-        ArtistsQuery.getArtists(queryAccessor, Optional.absent(), Optional.of(tc.LIMIT));
-        verify(queryAccessor, atLeastOnce()).getArtistsWithLimit(tc.LIMIT);
-    }
+  @Test
+  public void testGetArtistsWithLimit() {
+    ArtistsQuery.getArtists(queryAccessor, Optional.absent(), Optional.of(tc.LIMIT));
+    verify(queryAccessor, atLeastOnce()).getArtistsWithLimit(tc.LIMIT);
+  }
 
-    @Test
-    public void testGetArtists() {
-        ArtistsQuery.getArtists(queryAccessor, Optional.absent(), Optional.absent());
-        verify(queryAccessor, atLeastOnce()).getArtists();
-    }
+  @Test
+  public void testGetArtists() {
+    ArtistsQuery.getArtists(queryAccessor, Optional.absent(), Optional.absent());
+    verify(queryAccessor, atLeastOnce()).getArtists();
+  }
 }
