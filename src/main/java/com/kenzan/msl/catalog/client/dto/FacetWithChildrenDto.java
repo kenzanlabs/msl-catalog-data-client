@@ -9,19 +9,19 @@ import java.util.List;
  * @author kenzan
  */
 public class FacetWithChildrenDto extends FacetDto {
-    private List<FacetDto> children;
+  private List<FacetDto> children;
 
-    /**
-     * @return the children
-     */
-    public List<FacetDto> getChildren() {
-        return children;
-    }
+  /**
+   * @return the children
+   */
+  public List<FacetDto> getChildren() {
+    return children;
+  }
 
-    /**
-     * @param children the children to set
-     */
-    public void setChildren(List<FacetDto> children) {
-        this.children = children;
-    }
+  /**
+   * @param children the children to set
+   */
+  public void setChildren(List<FacetDto> children) {
+    this.children = children;
+  }
 }

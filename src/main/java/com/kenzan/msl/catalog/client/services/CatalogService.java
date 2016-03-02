@@ -22,62 +22,62 @@ import java.util.UUID;
 
 public interface CatalogService {
 
-    // ==========================================================================================================
-    // PAGINATION
-    // ==========================================================================================================
+  // ==========================================================================================================
+  // PAGINATION
+  // ==========================================================================================================
 
-    Observable<Void> addOrUpdatePagingState(PagingStateDto pagingState);
+  Observable<Void> addOrUpdatePagingState(PagingStateDto pagingState);
 
-    Observable<PagingStateDto> getPagingState(UUID pagingStateUuid);
+  Observable<PagingStateDto> getPagingState(UUID pagingStateUuid);
 
-    Observable<Void> deletePagingState(UUID pagingStateUuid);
+  Observable<Void> deletePagingState(UUID pagingStateUuid);
 
-    // ==========================================================================================================
-    // ALBUMS
-    // =================================================================================================================
+  // ==========================================================================================================
+  // ALBUMS
+  // =================================================================================================================
 
-    Observable<ResultSet> getFeaturedAlbums(Optional<Integer> limit);
+  Observable<ResultSet> getFeaturedAlbums(Optional<Integer> limit);
 
-    Observable<Result<FeaturedAlbumsDto>> mapFeaturedAlbums(Observable<ResultSet> object);
+  Observable<Result<FeaturedAlbumsDto>> mapFeaturedAlbums(Observable<ResultSet> object);
 
-    Observable<ResultSet> getAlbumsByFacet(String facetName, Optional<Integer> limit);
+  Observable<ResultSet> getAlbumsByFacet(String facetName, Optional<Integer> limit);
 
-    Observable<Result<AlbumsByFacetDto>> mapAlbumsByFacet(Observable<ResultSet> object);
+  Observable<Result<AlbumsByFacetDto>> mapAlbumsByFacet(Observable<ResultSet> object);
 
-    Observable<ResultSet> getAlbumArtistBySong(UUID songUuid, Optional<Integer> limit);
+  Observable<ResultSet> getAlbumArtistBySong(UUID songUuid, Optional<Integer> limit);
 
-    Observable<Result<AlbumArtistBySongDto>> mapAlbumArtistBySong(Observable<ResultSet> object);
+  Observable<Result<AlbumArtistBySongDto>> mapAlbumArtistBySong(Observable<ResultSet> object);
 
-    // =========================================================================================================
-    // ARTISTS
-    // =================================================================================================================
+  // =========================================================================================================
+  // ARTISTS
+  // =================================================================================================================
 
-    Observable<ResultSet> getFeaturedArtists(Optional<Integer> limit);
+  Observable<ResultSet> getFeaturedArtists(Optional<Integer> limit);
 
-    Observable<Result<FeaturedArtistsDto>> mapFeaturedArtists(Observable<ResultSet> object);
+  Observable<Result<FeaturedArtistsDto>> mapFeaturedArtists(Observable<ResultSet> object);
 
-    Observable<ResultSet> getArtistsByFacet(String facetName, Optional<Integer> limit);
+  Observable<ResultSet> getArtistsByFacet(String facetName, Optional<Integer> limit);
 
-    Observable<Result<ArtistsByFacetDto>> mapArtistByFacet(Observable<ResultSet> object);
+  Observable<Result<ArtistsByFacetDto>> mapArtistByFacet(Observable<ResultSet> object);
 
-    // ===========================================================================================================
-    // SONGS
-    // =================================================================================================================
+  // ===========================================================================================================
+  // SONGS
+  // =================================================================================================================
 
-    Observable<ResultSet> getFeaturedSongs(Optional<Integer> limit);
+  Observable<ResultSet> getFeaturedSongs(Optional<Integer> limit);
 
-    Observable<Result<FeaturedSongsDto>> mapFeaturedSongs(Observable<ResultSet> object);
+  Observable<Result<FeaturedSongsDto>> mapFeaturedSongs(Observable<ResultSet> object);
 
-    Observable<ResultSet> getSongsByFacets(String facets, Optional<Integer> limit);
+  Observable<ResultSet> getSongsByFacets(String facets, Optional<Integer> limit);
 
-    Observable<Result<SongsByFacetDto>> mapSongsByFacet(Observable<ResultSet> object);
+  Observable<Result<SongsByFacetDto>> mapSongsByFacet(Observable<ResultSet> object);
 
-    Observable<ResultSet> getSongsAlbumsByArtist(UUID artistUuid, Optional<Integer> limit);
+  Observable<ResultSet> getSongsAlbumsByArtist(UUID artistUuid, Optional<Integer> limit);
 
-    Observable<Result<SongsAlbumsByArtistDto>> mapSongsAlbumsByArtist(Observable<ResultSet> object);
+  Observable<Result<SongsAlbumsByArtistDto>> mapSongsAlbumsByArtist(Observable<ResultSet> object);
 
-    Observable<ResultSet> getSongsArtistByAlbum(UUID albumUuid, Optional<Integer> limit);
+  Observable<ResultSet> getSongsArtistByAlbum(UUID albumUuid, Optional<Integer> limit);
 
-    Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(Observable<ResultSet> object);
+  Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(Observable<ResultSet> object);
 
 }
