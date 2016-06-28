@@ -14,6 +14,8 @@ import com.datastax.driver.mapping.Result;
 import com.google.common.base.Optional;
 import com.kenzan.msl.catalog.client.cassandra.QueryAccessor;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import com.kenzan.msl.catalog.client.cassandra.query.AlbumsQuery;
@@ -30,6 +32,7 @@ import com.kenzan.msl.catalog.client.dto.FeaturedSongsDto;
 import com.kenzan.msl.catalog.client.dto.SongsByFacetDto;
 import com.kenzan.msl.catalog.client.dto.SongsAlbumsByArtistDto;
 import com.kenzan.msl.catalog.client.dto.SongsArtistByAlbumDto;
+import org.codehaus.plexus.util.StringUtils;
 import rx.Observable;
 
 /**
@@ -40,31 +43,69 @@ public class CassandraCatalogService implements CatalogService {
   public QueryAccessor queryAccessor;
   public MappingManager mappingManager;
 
-  private static final String DEFAULT_CONTACT_POINT = "127.0.0.1";
   private static final String DEFAULT_MSL_KEYSPACE = "msl";
+  private static final String DEFAULT_MSL_REGION = "us-west-2";
+  private static final String DEFAULT_CLUSTER = "127.0.0.1";
+
+  private static DynamicStringProperty domain;
+  private static DynamicStringProperty keyspace;
+  private static DynamicStringProperty region;
 
   private static CassandraCatalogService instance = null;
 
   private CassandraCatalogService() {
-    ArchaiusHelper.setupArchaius();
-    DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
-    DynamicStringProperty contactPoint =
-        propertyFactory.getStringProperty("contact_point", DEFAULT_CONTACT_POINT);
-    Cluster cluster = Cluster.builder().addContactPoint(contactPoint.getValue()).build();
+    Cluster.Builder builder = Cluster.builder();
+    String domainValue = domain.getValue();
+    if (StringUtils.isNotEmpty(domainValue)) {
+      String[] clusterNodes = StringUtils.split(domainValue, ",");
+      for (String node : clusterNodes) {
+        builder.addContactPoint(node);
+      }
+    }
 
-    DynamicStringProperty keyspace =
-        propertyFactory.getStringProperty("keyspace", DEFAULT_MSL_KEYSPACE);
+    Cluster cluster = builder.build();
     Session session = cluster.connect(keyspace.getValue());
 
     mappingManager = new MappingManager(session);
     queryAccessor = mappingManager.createAccessor(QueryAccessor.class);
   }
 
-  public static CassandraCatalogService getInstance() {
+  public static CassandraCatalogService getInstance(Optional<HashMap<String, Optional<String>>> archaiusProperties) {
     if (instance == null) {
+      initializeDynamicProperties(archaiusProperties);
       instance = new CassandraCatalogService();
     }
     return instance;
+  }
+
+  public static CassandraCatalogService getInstance() {
+    return getInstance(Optional.absent());
+  }
+
+  private static void initializeDynamicProperties(Optional<HashMap<String, Optional<String>>> archaiusProperties) {
+    ArchaiusHelper.setupArchaius();
+    DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
+
+    keyspace = propertyFactory.getStringProperty("keyspace", DEFAULT_MSL_KEYSPACE);
+    region = propertyFactory.getStringProperty("region", DEFAULT_MSL_REGION);
+
+    String regionValue = "", domainName = "";
+    if (archaiusProperties.isPresent()) {
+      for (Map.Entry<String, Optional<String>> entry : archaiusProperties.get().entrySet()) {
+        if (entry.getValue().isPresent()) {
+          switch (entry.getKey()) {
+            case "region":
+              regionValue = entry.getValue().get();
+              break;
+            case "domainName":
+              domainName = entry.getValue().get();
+              break;
+          }
+        }
+      }
+    }
+
+    domain = propertyFactory.getStringProperty(StringUtils.isNotEmpty(domainName) ? domainName : "local", DEFAULT_CLUSTER);
   }
 
   // ==========================================================================================================
@@ -130,14 +171,14 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<FeaturedAlbumsDto>> mapFeaturedAlbums(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(FeaturedAlbumsDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves a list of albums filtered by a specific facet, optionally limited
    *
    * @param facetName String
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit     Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getAlbumsByFacet(String facetName, Optional<Integer> limit) {
@@ -152,14 +193,14 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<AlbumsByFacetDto>> mapAlbumsByFacet(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(AlbumsByFacetDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves results from the album_artist_by_song cassandra table
    *
    * @param songUuid java.util.UUID
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit    Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getAlbumArtistBySong(UUID songUuid, Optional<Integer> limit) {
@@ -174,7 +215,7 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<AlbumArtistBySongDto>> mapAlbumArtistBySong(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(AlbumArtistBySongDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   // =========================================================================================================
@@ -199,14 +240,14 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<FeaturedArtistsDto>> mapFeaturedArtists(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(FeaturedArtistsDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves a list of artist filtered by facet, optionally limited
    *
    * @param facetName String
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit     Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getArtistsByFacet(String facetName, Optional<Integer> limit) {
@@ -221,7 +262,7 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<ArtistsByFacetDto>> mapArtistByFacet(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(ArtistsByFacetDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   // ===========================================================================================================
@@ -246,14 +287,14 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<FeaturedSongsDto>> mapFeaturedSongs(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(FeaturedSongsDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves a list fo songs filtered by a specific facet. Optionally limited
    *
    * @param facetName String
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit     Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getSongsByFacets(String facetName, Optional<Integer> limit) {
@@ -268,14 +309,14 @@ public class CassandraCatalogService implements CatalogService {
    */
   public Observable<Result<SongsByFacetDto>> mapSongsByFacet(Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(SongsByFacetDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves results from the songs_albums_by_artist cassandra table
    *
    * @param artistUuid java.util.UUID
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit      Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getSongsAlbumsByArtist(UUID artistUuid, Optional<Integer> limit) {
@@ -289,16 +330,16 @@ public class CassandraCatalogService implements CatalogService {
    * @return Observable&lt;Result&lt;SongsAlbumsByArtistDto&gt;&gt;
    */
   public Observable<Result<SongsAlbumsByArtistDto>> mapSongsAlbumsByArtist(
-      Observable<ResultSet> object) {
+    Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(SongsAlbumsByArtistDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
   /**
    * Retrieves results from the songs_artist_by_album cassandra table
    *
    * @param albumUuid java.util.UUID
-   * @param limit Optional&lt;Integer&gt;
+   * @param limit     Optional&lt;Integer&gt;
    * @return Observable&lt;ResultSet&gt;
    */
   public Observable<ResultSet> getSongsArtistByAlbum(UUID albumUuid, Optional<Integer> limit) {
@@ -312,9 +353,9 @@ public class CassandraCatalogService implements CatalogService {
    * @return Observable&lt;Result&lt;SongsArtistByAlbumDto&gt;&gt;
    */
   public Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(
-      Observable<ResultSet> object) {
+    Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(SongsArtistByAlbumDto.class).map(
-        object.toBlocking().first()));
+      object.toBlocking().first()));
   }
 
 }
