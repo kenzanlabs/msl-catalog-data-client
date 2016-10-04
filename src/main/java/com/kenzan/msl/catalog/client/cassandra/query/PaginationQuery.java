@@ -3,7 +3,6 @@ package com.kenzan.msl.catalog.client.cassandra.query;
 import com.datastax.driver.mapping.Mapper;
 import com.datastax.driver.mapping.MappingManager;
 import com.google.common.base.Optional;
-import com.kenzan.msl.catalog.client.archaius.ArchaiusHelper;
 import com.kenzan.msl.catalog.client.dto.PagingStateDto;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicIntProperty;
@@ -21,7 +20,6 @@ public class PaginationQuery {
    * @param pagingState com.kenzan.msl.catalog.client.dto.PagingStateDto
    */
   public static void add(final MappingManager manager, final PagingStateDto pagingState) {
-    ArchaiusHelper.setupArchaius();
     DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
     DynamicIntProperty ttlSecs =
         propertyFactory.getIntProperty("paging_state_ttl_secs", DEFAULT_TTL_SECS);

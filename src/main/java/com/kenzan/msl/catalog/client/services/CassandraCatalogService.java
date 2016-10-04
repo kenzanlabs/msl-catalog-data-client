@@ -3,7 +3,6 @@
  */
 package com.kenzan.msl.catalog.client.services;
 
-import com.kenzan.msl.catalog.client.archaius.ArchaiusHelper;
 import com.netflix.config.DynamicPropertyFactory;
 import com.netflix.config.DynamicStringProperty;
 import com.datastax.driver.core.Cluster;
@@ -83,7 +82,6 @@ public class CassandraCatalogService implements CatalogService {
   }
 
   private static void initializeDynamicProperties(Optional<HashMap<String, Optional<String>>> archaiusProperties) {
-    ArchaiusHelper.setupArchaius();
     DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
 
     keyspace = propertyFactory.getStringProperty("keyspace", DEFAULT_MSL_KEYSPACE);
