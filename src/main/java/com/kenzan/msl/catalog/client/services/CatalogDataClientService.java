@@ -4,8 +4,10 @@
 package com.kenzan.msl.catalog.client.services;
 
 import com.datastax.driver.core.ResultSet;
+import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 import com.google.common.base.Optional;
+import com.kenzan.msl.catalog.client.cassandra.QueryAccessor;
 import com.kenzan.msl.catalog.client.dto.PagingStateDto;
 import com.kenzan.msl.catalog.client.dto.FeaturedAlbumsDto;
 import com.kenzan.msl.catalog.client.dto.AlbumsByFacetDto;
@@ -20,7 +22,10 @@ import rx.Observable;
 
 import java.util.UUID;
 
-public interface CatalogService {
+/**
+ * @author Kenzan
+ */
+public interface CatalogDataClientService {
 
   // ==========================================================================================================
   // PAGINATION
@@ -79,5 +84,13 @@ public interface CatalogService {
   Observable<ResultSet> getSongsArtistByAlbum(UUID albumUuid, Optional<Integer> limit);
 
   Observable<Result<SongsArtistByAlbumDto>> mapSongsArtistByAlbum(Observable<ResultSet> object);
+
+  // ===========================================================================================================
+  // MISC
+  // =================================================================================================================
+
+  QueryAccessor getQueryAccessor ();
+
+  MappingManager getMappingManager ();
 
 }

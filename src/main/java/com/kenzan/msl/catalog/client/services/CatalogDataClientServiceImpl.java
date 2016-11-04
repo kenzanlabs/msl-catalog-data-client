@@ -3,19 +3,13 @@
  */
 package com.kenzan.msl.catalog.client.services;
 
-import com.kenzan.msl.catalog.client.archaius.ArchaiusHelper;
-import com.netflix.config.DynamicPropertyFactory;
-import com.netflix.config.DynamicStringProperty;
-import com.datastax.driver.core.Cluster;
+import com.google.inject.Inject;
 import com.datastax.driver.core.ResultSet;
-import com.datastax.driver.core.Session;
 import com.datastax.driver.mapping.MappingManager;
 import com.datastax.driver.mapping.Result;
 import com.google.common.base.Optional;
 import com.kenzan.msl.catalog.client.cassandra.QueryAccessor;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
 
 import com.kenzan.msl.catalog.client.cassandra.query.AlbumsQuery;
@@ -32,80 +26,21 @@ import com.kenzan.msl.catalog.client.dto.FeaturedSongsDto;
 import com.kenzan.msl.catalog.client.dto.SongsByFacetDto;
 import com.kenzan.msl.catalog.client.dto.SongsAlbumsByArtistDto;
 import com.kenzan.msl.catalog.client.dto.SongsArtistByAlbumDto;
-import org.codehaus.plexus.util.StringUtils;
 import rx.Observable;
 
 /**
- * Implementation of the CatalogService interface that retrieves its data from a Cassandra cluster.
+ * Implementation of the CatalogDataClientService interface that retrieves its data from a Cassandra cluster.
+ * @author Kenzan
  */
-public class CassandraCatalogService implements CatalogService {
+public class CatalogDataClientServiceImpl implements CatalogDataClientService {
 
-  public QueryAccessor queryAccessor;
-  public MappingManager mappingManager;
+  private QueryAccessor queryAccessor;
+  private MappingManager mappingManager;
 
-  private static final String DEFAULT_MSL_KEYSPACE = "msl";
-  private static final String DEFAULT_MSL_REGION = "us-west-2";
-  private static final String DEFAULT_CLUSTER = "127.0.0.1";
-
-  private static DynamicStringProperty domain;
-  private static DynamicStringProperty keyspace;
-  private static DynamicStringProperty region;
-
-  private static CassandraCatalogService instance = null;
-
-  private CassandraCatalogService() {
-    Cluster.Builder builder = Cluster.builder();
-    String domainValue = domain.getValue();
-    if (StringUtils.isNotEmpty(domainValue)) {
-      String[] clusterNodes = StringUtils.split(domainValue, ",");
-      for (String node : clusterNodes) {
-        builder.addContactPoint(node);
-      }
-    }
-
-    Cluster cluster = builder.build();
-    Session session = cluster.connect(keyspace.getValue());
-
-    mappingManager = new MappingManager(session);
-    queryAccessor = mappingManager.createAccessor(QueryAccessor.class);
-  }
-
-  public static CassandraCatalogService getInstance(Optional<HashMap<String, Optional<String>>> archaiusProperties) {
-    if (instance == null) {
-      initializeDynamicProperties(archaiusProperties);
-      instance = new CassandraCatalogService();
-    }
-    return instance;
-  }
-
-  public static CassandraCatalogService getInstance() {
-    return getInstance(Optional.absent());
-  }
-
-  private static void initializeDynamicProperties(Optional<HashMap<String, Optional<String>>> archaiusProperties) {
-    ArchaiusHelper.setupArchaius();
-    DynamicPropertyFactory propertyFactory = DynamicPropertyFactory.getInstance();
-
-    keyspace = propertyFactory.getStringProperty("keyspace", DEFAULT_MSL_KEYSPACE);
-    region = propertyFactory.getStringProperty("region", DEFAULT_MSL_REGION);
-
-    String regionValue = "", domainName = "";
-    if (archaiusProperties.isPresent()) {
-      for (Map.Entry<String, Optional<String>> entry : archaiusProperties.get().entrySet()) {
-        if (entry.getValue().isPresent()) {
-          switch (entry.getKey()) {
-            case "region":
-              regionValue = entry.getValue().get();
-              break;
-            case "domainName":
-              domainName = entry.getValue().get();
-              break;
-          }
-        }
-      }
-    }
-
-    domain = propertyFactory.getStringProperty(StringUtils.isNotEmpty(domainName) ? domainName : "local", DEFAULT_CLUSTER);
+  @Inject
+  public CatalogDataClientServiceImpl (final MappingManager mappingManager) {
+    this.mappingManager = mappingManager;
+    queryAccessor = this.mappingManager.createAccessor(QueryAccessor.class);
   }
 
   // ==========================================================================================================
@@ -356,6 +291,22 @@ public class CassandraCatalogService implements CatalogService {
     Observable<ResultSet> object) {
     return Observable.just(mappingManager.mapper(SongsArtistByAlbumDto.class).map(
       object.toBlocking().first()));
+  }
+
+  /**
+   * Retrieves the query Accessor
+   * @return QueryAccessor
+   */
+  public QueryAccessor getQueryAccessor () {
+    return queryAccessor;
+  }
+
+  /**
+   * Retrieves the mappingManager
+   * @return MappingManager
+   */
+  public MappingManager getMappingManager () {
+    return mappingManager;
   }
 
 }

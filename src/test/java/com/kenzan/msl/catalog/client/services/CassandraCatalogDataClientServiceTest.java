@@ -41,12 +41,12 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({CassandraCatalogService.class, AlbumsQuery.class, SongsQuery.class,
+@PrepareForTest({CatalogDataClientServiceImpl.class, AlbumsQuery.class, SongsQuery.class,
     ArtistsQuery.class, PaginationQuery.class, Session.class, Cluster.class, MappingManager.class})
-public class CassandraCatalogServiceTest {
+public class CassandraCatalogDataClientServiceTest {
 
   private TestConstants tc = TestConstants.getInstance();
-  private CassandraCatalogService cassandraCatalogService;
+  private CatalogDataClientServiceImpl cassandraCatalogServiceImpl;
   private ResultSet resultSet;
   private Observable<ResultSet> observableResultSet;
   private MappingManager manager;
@@ -55,19 +55,7 @@ public class CassandraCatalogServiceTest {
   public void init() throws Exception {
     resultSet = createMock(ResultSet.class);
     observableResultSet = Observable.just(resultSet);
-
-    Session session = PowerMock.createMock(Session.class);
-    Cluster cluster = PowerMock.createMock(Cluster.class);
-    Cluster.Builder builder = PowerMock.createMock(Cluster.Builder.class);
-
-    PowerMock.mockStatic(Cluster.class);
-    EasyMock.expect(Cluster.builder()).andReturn(builder);
-    EasyMock.expect(builder.addContactPoint(EasyMock.anyString())).andReturn(builder);
-    EasyMock.expect(builder.build()).andReturn(cluster);
-    EasyMock.expect(cluster.connect(EasyMock.anyString())).andReturn(session);
-
     manager = PowerMockito.mock(MappingManager.class);
-    PowerMockito.whenNew(MappingManager.class).withAnyArguments().thenReturn(manager);
 
     Mapper<FeaturedAlbumsDto> myFeaturedAlbumsMapper = PowerMockito.mock(Mapper.class);
     PowerMockito.when(manager.mapper(FeaturedAlbumsDto.class)).thenReturn(myFeaturedAlbumsMapper);
@@ -113,6 +101,7 @@ public class CassandraCatalogServiceTest {
     PowerMock.mockStatic(AlbumsQuery.class);
     PowerMock.mockStatic(ArtistsQuery.class);
     PowerMock.mockStatic(SongsQuery.class);
+    cassandraCatalogServiceImpl = new CatalogDataClientServiceImpl(manager);
   }
 
   // ==========================================================================================================
@@ -126,8 +115,7 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-    Observable<PagingStateDto> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
+    Observable<PagingStateDto> results = cassandraCatalogServiceImpl.getPagingState(tc.PAGING_ID);
     assertEquals(results.toBlocking().first(), tc.PAGING_STATE);
   }
 
@@ -138,8 +126,7 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-    Observable<PagingStateDto> results = cassandraCatalogService.getPagingState(tc.PAGING_ID);
+    Observable<PagingStateDto> results = cassandraCatalogServiceImpl.getPagingState(tc.PAGING_ID);
     assertTrue(results.isEmpty().toBlocking().first());
   }
 
@@ -147,8 +134,7 @@ public class CassandraCatalogServiceTest {
   public void testAddOrUpdatePagingState() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-    Observable<Void> results = cassandraCatalogService.addOrUpdatePagingState(tc.PAGING_STATE);
+    Observable<Void> results = cassandraCatalogServiceImpl.addOrUpdatePagingState(tc.PAGING_STATE);
     assertTrue(results.isEmpty().toBlocking().first());
   }
 
@@ -156,8 +142,7 @@ public class CassandraCatalogServiceTest {
   public void testDeletePagingState() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-    Observable<Void> results = cassandraCatalogService.deletePagingState(tc.PAGING_ID);
+    Observable<Void> results = cassandraCatalogServiceImpl.deletePagingState(tc.PAGING_ID);
     assertTrue(results.isEmpty().toBlocking().first());
   }
 
@@ -174,9 +159,7 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
-    Observable<ResultSet> result = cassandraCatalogService.getFeaturedAlbums(Optional.of(tc.LIMIT));
+    Observable<ResultSet> result = cassandraCatalogServiceImpl.getFeaturedAlbums(Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -184,9 +167,8 @@ public class CassandraCatalogServiceTest {
   public void testMapFeaturedAlbums() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<FeaturedAlbumsDto>> results =
-        cassandraCatalogService.mapFeaturedAlbums(observableResultSet);
+        cassandraCatalogServiceImpl.mapFeaturedAlbums(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -199,9 +181,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<ResultSet> result =
-        cassandraCatalogService.getAlbumsByFacet(tc.FACET, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getAlbumsByFacet(tc.FACET, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -209,9 +190,8 @@ public class CassandraCatalogServiceTest {
   public void testMapAlbumsByFacet() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<AlbumsByFacetDto>> results =
-        cassandraCatalogService.mapAlbumsByFacet(observableResultSet);
+        cassandraCatalogServiceImpl.mapAlbumsByFacet(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -223,10 +203,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getAlbumArtistBySong(tc.SONG_ID, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getAlbumArtistBySong(tc.SONG_ID, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -234,9 +212,8 @@ public class CassandraCatalogServiceTest {
   public void testMapAlbumArtistBySong() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<AlbumArtistBySongDto>> results =
-        cassandraCatalogService.mapAlbumArtistBySong(observableResultSet);
+        cassandraCatalogServiceImpl.mapAlbumArtistBySong(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -253,10 +230,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getFeaturedArtists(Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getFeaturedArtists(Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -264,9 +239,8 @@ public class CassandraCatalogServiceTest {
   public void testMapFeaturedArtists() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<FeaturedArtistsDto>> results =
-        cassandraCatalogService.mapFeaturedArtists(observableResultSet);
+        cassandraCatalogServiceImpl.mapFeaturedArtists(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -279,10 +253,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getArtistsByFacet(tc.FACET, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getArtistsByFacet(tc.FACET, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -290,9 +262,8 @@ public class CassandraCatalogServiceTest {
   public void testMapArtistsByFacet() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<ArtistsByFacetDto>> results =
-        cassandraCatalogService.mapArtistByFacet(observableResultSet);
+        cassandraCatalogServiceImpl.mapArtistByFacet(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -309,9 +280,7 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
-    Observable<ResultSet> result = cassandraCatalogService.getFeaturedSongs(Optional.of(tc.LIMIT));
+    Observable<ResultSet> result = cassandraCatalogServiceImpl.getFeaturedSongs(Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -319,9 +288,8 @@ public class CassandraCatalogServiceTest {
   public void testMapFeaturedSongs() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<FeaturedSongsDto>> results =
-        cassandraCatalogService.mapFeaturedSongs(observableResultSet);
+        cassandraCatalogServiceImpl.mapFeaturedSongs(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -333,11 +301,8 @@ public class CassandraCatalogServiceTest {
         resultSet);
 
     PowerMock.replayAll();
-
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getSongsByFacets(tc.FACET, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getSongsByFacets(tc.FACET, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -345,9 +310,8 @@ public class CassandraCatalogServiceTest {
   public void testMapSongsByFacet() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<SongsByFacetDto>> results =
-        cassandraCatalogService.mapSongsByFacet(observableResultSet);
+        cassandraCatalogServiceImpl.mapSongsByFacet(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -359,10 +323,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getSongsAlbumsByArtist(tc.ARTIST_ID, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getSongsAlbumsByArtist(tc.ARTIST_ID, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -370,9 +332,8 @@ public class CassandraCatalogServiceTest {
   public void testMapSongsAlbumsByArtist() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<SongsAlbumsByArtistDto>> results =
-        cassandraCatalogService.mapSongsAlbumsByArtist(observableResultSet);
+        cassandraCatalogServiceImpl.mapSongsAlbumsByArtist(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
@@ -384,10 +345,8 @@ public class CassandraCatalogServiceTest {
 
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
-
     Observable<ResultSet> result =
-        cassandraCatalogService.getSongsArtistByAlbum(tc.ALBUM_ID, Optional.of(tc.LIMIT));
+        cassandraCatalogServiceImpl.getSongsArtistByAlbum(tc.ALBUM_ID, Optional.of(tc.LIMIT));
     assertEquals(result.toBlocking().first(), resultSet);
   }
 
@@ -395,9 +354,8 @@ public class CassandraCatalogServiceTest {
   public void testMapSongsArtistByAlbum() {
     PowerMock.replayAll();
 
-    cassandraCatalogService = CassandraCatalogService.getInstance();
     Observable<Result<SongsArtistByAlbumDto>> results =
-        cassandraCatalogService.mapSongsArtistByAlbum(observableResultSet);
+        cassandraCatalogServiceImpl.mapSongsArtistByAlbum(observableResultSet);
     assertNull(results.toBlocking().first());
   }
 
