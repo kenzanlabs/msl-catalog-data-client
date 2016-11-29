@@ -4,7 +4,7 @@
     <groupId>msl.server</groupId>
     <artifactId>msl-catalog-data-client</artifactId>
     <packaging>jar</packaging>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
 
   <distributionManagement>
     <repository>
@@ -371,7 +371,7 @@
 
         <formatter-maven-plugin.version>0.5.2</formatter-maven-plugin.version>
 
-        <msl-server.version>1.3.0</msl-server.version>
+        <msl-server.version>1.4.0</msl-server.version>
     </properties>
 
 </project>
